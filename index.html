@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kasir Bazaar POS - Sistem kasir modern dengan desain claymorphism untuk transaksi bazaar yang cepat dan mudah.">
+  <title>Kasir Bazaar POS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS
+       ═══════════════════════════════════════════ */
+    :root {
+      /* Background */
+      --bg: #e8eef6;
+      --bg-subtle: #dce5f0;
+
+      /* Blue palette — dark to light */
+      --navy: #0f2042;
+      --navy-deep: #0a1628;
+      --royal: #1e3a5f;
+      --royal-deep: #152d4d;
+      --sapphire: #2563eb;
+      --sapphire-deep: #1d4ed8;
+      --sapphire-shadow: #1e40af;
+      --ocean: #3b82f6;
+      --ocean-deep: #2563eb;
+      --sky: #60a5fa;
+      --sky-deep: #3b82f6;
+      --sky-shadow: #2563eb;
+      --sky-highlight: #bfdbfe;
+      --ice: #93c5fd;
+      --ice-deep: #60a5fa;
+      --ice-highlight: #dbeafe;
+      --powder: #bfdbfe;
+      --frost: #dbeafe;
+
+      /* Semantic mapped to blue shades */
+      --blue: var(--sky);
+      --blue-deep: var(--ocean);
+      --blue-shadow: var(--sapphire-shadow);
+      --blue-highlight: var(--ice-highlight);
+
+      --peach: var(--ice);
+      --peach-deep: var(--sky);
+      --peach-shadow: var(--sapphire);
+      --peach-highlight: var(--frost);
+
+      --mint: var(--ocean);
+      --mint-deep: var(--sapphire);
+      --mint-shadow: var(--royal);
+      --mint-highlight: var(--powder);
+
+      --pink: var(--sapphire);
+      --pink-deep: var(--sapphire-deep);
+      --pink-shadow: var(--navy);
+      --pink-highlight: var(--ice-highlight);
+
+      --lilac: var(--ice);
+      --lilac-deep: var(--sky);
+      --lilac-shadow: var(--royal);
+      --lilac-highlight: var(--frost);
+
+      --yellow: var(--powder);
+      --yellow-deep: var(--sky);
+
+      --white: #ffffff;
+      --clay-bg: #eef3fa;
+      --clay-bg-alt: #e2eaf5;
+      --text: #0f2042;
+      --text-light: #1e3a5f;
+      --text-muted: #6b8ab5;
+      --danger: #ef5350;
+      --danger-deep: #e53935;
+      --success: var(--ocean);
+
+      --radius-sm: 0px;
+      --radius: 0px;
+      --radius-lg: 0px;
+      --radius-pill: 0px;
+
+      --shadow-clay:
+        6px 6px 14px rgba(15, 32, 66, 0.18),
+        -3px -3px 10px rgba(255, 255, 255, 0.7),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(15, 32, 66, 0.10);
+
+      --shadow-clay-inset:
+        inset 4px 4px 8px rgba(15, 32, 66, 0.10),
+        inset -2px -2px 6px rgba(255, 255, 255, 0.7);
+
+      --shadow-clay-hover:
+        10px 10px 20px rgba(15, 32, 66, 0.17),
+        -5px -5px 15px rgba(255, 255, 255, 0.9),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.6),
+        inset -2px -2px 4px rgba(15, 32, 66, 0.07);
+
+      --shadow-clay-pressed:
+        2px 2px 4px rgba(15, 32, 66, 0.07),
+        -1px -1px 3px rgba(255, 255, 255, 0.5),
+        inset 4px 4px 10px rgba(15, 32, 66, 0.17),
+        inset -3px -3px 8px rgba(255, 255, 255, 0.5);
+
+      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ═══════════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      background-image:
+        linear-gradient(180deg, rgba(232, 238, 246, 0.80) 0%, rgba(220, 232, 246, 0.86) 100%),
+        url('bg.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* ═══════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════ */
+    .header {
+      text-align: center;
+      padding: 24px 20px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .header-title-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      background: rgba(238, 243, 250, 0.90);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 10px 24px;
+      border-radius: 0px;
+      box-shadow: var(--shadow-clay);
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      transition: all var(--transition);
+    }
+    .header-title-wrap:hover {
+      box-shadow: var(--shadow-clay-hover);
+      transform: translateY(-2px);
+    }
+    .header-logo {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.18));
+      transition: transform var(--transition);
+    }
+    .header-title-wrap:hover .header-logo {
+      transform: scale(1.08) rotate(4deg);
+    }
+    .header h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--navy), var(--sapphire), var(--sky));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.3px;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    /* ═══════════════════════════════════════════
+       LAYOUT
+       ═══════════════════════════════════════════ */
+    .app-container {
+      max-width: 1340px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 24px;
+    }
+    .block {
+      background: rgba(238, 243, 250, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-clay);
+      border: 1.5px solid rgba(255, 255, 255, 0.8);
+      transition: box-shadow var(--transition);
+    }
+    .block-order   { grid-column: 1; grid-row: 1; }
+    .block-checkout { grid-column: 2; grid-row: 1; }
+    .block-history { grid-column: 1 / -1; grid-row: 2; }
+
+    .block-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .block-title .icon {
+      width: 34px; height: 34px;
+      border-radius: 0px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: var(--shadow-clay);
+    }
+
+    /* ═══════════════════════════════════════════
+       CLAY INPUT
+       ═══════════════════════════════════════════ */
+    .clay-input-wrap {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .clay-input-wrap label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 8px;
+    }
+    .clay-input {
+      width: 100%;
+      padding: 14px 18px;
+      border: none;
+      border-radius: var(--radius);
+      background: var(--clay-bg-alt);
+      box-shadow: var(--shadow-clay-inset);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      outline: none;
+      transition: var(--transition);
+    }
+    .clay-input::placeholder { color: var(--text-muted); }
+    .clay-input:focus {
+      box-shadow:
+        inset 4px 4px 10px rgba(37,99,235,0.18),
+        inset -2px -2px 8px rgba(255,255,255,0.8),
+        0 0 0 3px rgba(37,99,235,0.25);
+    }
+
+    /* ═══════════════════════════════════════════
+       MENU GRID (Horizontal)
+       ═══════════════════════════════════════════ */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .menu-card {
+      background: var(--clay-bg);
+      border: 1.5px solid rgba(15, 32, 66, 0.06);
+      border-radius: var(--radius);
+      padding: 16px 12px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-clay);
+      transition: all var(--transition);
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .menu-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      opacity: 0.18;
+      transition: opacity var(--transition);
+    }
+    .menu-card:hover {
+      box-shadow: var(--shadow-clay-hover);
+      transform: translateY(-3px) scale(1.03);
+    }
+    .menu-card:active {
+      box-shadow: var(--shadow-clay-pressed);
+      transform: translateY(1px) scale(0.97);
+    }
+    .menu-card .emoji {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 6px;
+      transition: transform var(--transition);
+    }
+    .menu-card:hover .emoji { transform: scale(1.15) rotate(-5deg); }
+    .menu-card:active .emoji { transform: scale(0.9); }
+    .menu-card .item-name {
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--text);
+      margin-bottom: 4px;
+      line-height: 1.2;
+      letter-spacing: 0.2px;
+    }
+    .menu-card .item-price {
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--sapphire);
+    }
+
+    /* color bands for cards — blue shades */
+    .menu-card.c-navy    { border-bottom: 4px solid var(--navy); }
+    .menu-card.c-navy::before    { background: var(--navy); }
+    .menu-card.c-royal   { border-bottom: 4px solid var(--royal); }
+    .menu-card.c-royal::before   { background: var(--royal); }
+    .menu-card.c-sapphire { border-bottom: 4px solid var(--sapphire); }
+    .menu-card.c-sapphire::before { background: var(--sapphire); }
+    .menu-card.c-ocean   { border-bottom: 4px solid var(--ocean); }
+    .menu-card.c-ocean::before   { background: var(--ocean); }
+    .menu-card.c-sky     { border-bottom: 4px solid var(--sky); }
+    .menu-card.c-sky::before     { background: var(--sky); }
+    .menu-card.c-ice     { border-bottom: 4px solid var(--ice); }
+    .menu-card.c-ice::before     { background: var(--ice); }
+
+    .menu-card .badge {
+      position: absolute;
+      top: 6px; right: 8px;
+      background: var(--sapphire);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 700;
+      width: 22px; height: 22px;
+      border-radius: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 2px 2px 6px rgba(37,99,235,0.4);
+      animation: pop-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes pop-in {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
+    }
+
+    /* ═══════════════════════════════════════════
+       ORDER LIST
+       ═══════════════════════════════════════════ */
+    .order-section { margin-top: 20px; }
+    .order-section .section-label {
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+    .order-list {
+      max-height: 220px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-right: 4px;
+    }
+    .order-list::-webkit-scrollbar { width: 6px; }
+    .order-list::-webkit-scrollbar-track { background: transparent; }
+    .order-list::-webkit-scrollbar-thumb { background: var(--sky); border-radius: 0px; }
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--clay-bg-alt);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      box-shadow: var(--shadow-clay-inset);
+      animation: slide-in 0.25s ease-out;
+    }
+    @keyframes slide-in {
+      0% { opacity: 0; transform: translateX(-16px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+    .order-item .oi-name { flex: 1; font-weight: 700; font-size: 0.85rem; }
+    .order-item .oi-qty {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .order-item .oi-qty button {
+      width: 26px; height: 26px;
+      border: none;
+      border-radius: 0px;
+      background: var(--clay-bg);
+      box-shadow: var(--shadow-clay);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+    }
+    .order-item .oi-qty button:active {
+      box-shadow: var(--shadow-clay-pressed);
+      transform: scale(0.9);
+    }
+    .order-item .oi-qty span {
+      font-weight: 700;
+      font-size: 0.92rem;
+      min-width: 20px;
+      text-align: center;
+    }
+    .order-item .oi-price {
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--sapphire);
+      min-width: 70px;
+      text-align: right;
+    }
+    .order-item .oi-remove {
+      border: none;
+      background: none;
+      color: var(--danger);
+      cursor: pointer;
+      font-size: 1.1rem;
+      opacity: 0.6;
+      transition: var(--transition);
+      padding: 2px;
+    }
+    .order-item .oi-remove:hover { opacity: 1; transform: scale(1.2); }
+    .order-empty {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      padding: 28px 0;
+      font-weight: 500;
+    }
+
+    /* ═══════════════════════════════════════════
+       CHECKOUT BLOCK
+       ═══════════════════════════════════════════ */
+    .total-display {
+      background: linear-gradient(135deg, var(--navy), var(--sapphire));
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      text-align: center;
+      box-shadow:
+        6px 6px 14px rgba(30,58,95,0.30),
+        -3px -3px 10px rgba(255,255,255,0.5),
+        inset 2px 2px 6px rgba(255,255,255,0.2),
+        inset -2px -2px 6px rgba(10,22,40,0.15);
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .total-display::after {
+      content: '';
+      position: absolute;
+      top: -30%;
+      left: -10%;
+      width: 60%;
+      height: 60%;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.2), transparent 70%);
+      pointer-events: none;
+    }
+    .total-display .label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.85);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .total-display .amount {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-top: 4px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    /* Input Bar Uang Tunai */
+    .cash-input-group {
+      display: flex;
+      align-items: center;
+      background: var(--clay-bg-alt);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-clay-inset);
+      border: 1.5px solid rgba(15, 32, 66, 0.08);
+      padding: 4px 8px 4px 16px;
+      transition: var(--transition);
+      margin-bottom: 12px;
+    }
+    .cash-input-group:focus-within {
+      box-shadow:
+        inset 4px 4px 10px rgba(37,99,235,0.18),
+        inset -2px -2px 8px rgba(255,255,255,0.8),
+        0 0 0 3px rgba(37,99,235,0.25);
+      border-color: var(--sapphire);
+    }
+    .cash-prefix {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--sapphire);
+      user-select: none;
+      margin-right: 8px;
+    }
+    .cash-input-field {
+      flex: 1;
+      width: 100%;
+      padding: 12px 0;
+      border: none;
+      background: transparent;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+      outline: none;
+    }
+    .cash-input-field::placeholder {
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 1rem;
+    }
+    /* Hide spin buttons */
+    .cash-input-field::-webkit-outer-spin-button,
+    .cash-input-field::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .cash-input-field[type=number] {
+      -moz-appearance: textfield;
+    }
+    .cash-clear-btn {
+      background: var(--clay-bg);
+      border: none;
+      color: var(--danger);
+      width: 32px;
+      height: 32px;
+      border-radius: 0px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-clay);
+      transition: all var(--transition);
+      opacity: 0.7;
+    }
+    .cash-clear-btn:hover {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    .cash-clear-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Quick Cash Buttons */
+    .quick-cash {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 16px;
+    }
+    .quick-btn {
+      flex: 1;
+      min-width: 60px;
+      padding: 10px 6px;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: var(--clay-bg);
+      box-shadow: var(--shadow-clay);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .quick-btn:hover {
+      box-shadow: var(--shadow-clay-hover);
+      transform: translateY(-2px);
+    }
+    .quick-btn:active {
+      box-shadow: var(--shadow-clay-pressed);
+      transform: translateY(1px) scale(0.96);
+    }
+    .quick-btn.exact { background: var(--sapphire); color: var(--white); box-shadow: 4px 4px 10px rgba(37,99,235,0.3), -2px -2px 8px rgba(255,255,255,0.6), inset 2px 2px 4px rgba(255,255,255,0.4), inset -2px -2px 4px rgba(30,64,175,0.15); }
+
+    /* Change Display */
+    .change-display {
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      margin: 18px 0;
+      transition: all 0.35s ease;
+    }
+    .change-display.positive {
+      background: linear-gradient(135deg, var(--ocean), var(--sapphire));
+      box-shadow:
+        4px 4px 12px rgba(59,130,246,0.3),
+        -2px -2px 8px rgba(255,255,255,0.5),
+        inset 2px 2px 4px rgba(255,255,255,0.3),
+        inset -2px -2px 4px rgba(30,64,175,0.12);
+    }
+    .change-display.negative {
+      background: linear-gradient(135deg, var(--danger), var(--danger-deep));
+      box-shadow:
+        4px 4px 12px rgba(239,83,80,0.3),
+        -2px -2px 8px rgba(255,255,255,0.5),
+        inset 2px 2px 4px rgba(255,255,255,0.3),
+        inset -2px -2px 4px rgba(183,28,28,0.12);
+      animation: shake 0.4s ease;
+    }
+    .change-display.neutral {
+      background: var(--clay-bg-alt);
+      box-shadow: var(--shadow-clay-inset);
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-4px); }
+      40% { transform: translateX(4px); }
+      60% { transform: translateX(-3px); }
+      80% { transform: translateX(3px); }
+    }
+    .change-display .label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .change-display.positive .label,
+    .change-display.negative .label { color: rgba(255,255,255,0.85); }
+    .change-display.neutral .label { color: var(--text-muted); }
+    .change-display .amount {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .change-display.positive .amount,
+    .change-display.negative .amount { color: var(--white); text-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .change-display.neutral .amount { color: var(--text-muted); }
+
+    /* Payment Method Toggle */
+    .pay-method-wrap {
+      margin-bottom: 18px;
+    }
+    .pay-method-wrap label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 8px;
+    }
+    .pay-method-toggle {
+      display: flex;
+      gap: 0;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      box-shadow: var(--shadow-clay-inset);
+      border: 1.5px solid rgba(15, 32, 66, 0.08);
+    }
+    .pay-method-toggle button {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      background: var(--clay-bg-alt);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .pay-method-toggle button.active {
+      background: var(--sapphire);
+      color: var(--white);
+      box-shadow:
+        inset 2px 2px 4px rgba(255,255,255,0.2),
+        inset -2px -2px 4px rgba(15,32,66,0.15);
+    }
+    .pay-method-toggle button:not(.active):hover {
+      background: var(--frost);
+      color: var(--text);
+    }
+    .pay-method-toggle button:active {
+      transform: scale(0.97);
+    }
+
+    .qris-display {
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, var(--ocean), var(--sapphire));
+      box-shadow:
+        4px 4px 12px rgba(59,130,246,0.3),
+        -2px -2px 8px rgba(255,255,255,0.5),
+        inset 2px 2px 4px rgba(255,255,255,0.3),
+        inset -2px -2px 4px rgba(30,64,175,0.12);
+    }
+    .qris-display .qris-icon {
+      font-size: 2.4rem;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .qris-display .qris-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.85);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .qris-display .qris-status {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-top: 4px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .cash-section { transition: all 0.3s ease; }
+    .cash-section.hidden { display: none; }
+    .qris-section { transition: all 0.3s ease; }
+    .qris-section.hidden { display: none; }
+
+    /* Complete Button */
+    .btn-complete {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--sky), var(--navy));
+      box-shadow:
+        6px 6px 14px rgba(37,99,235,0.3),
+        -3px -3px 10px rgba(255,255,255,0.5),
+        inset 2px 2px 6px rgba(255,255,255,0.3),
+        inset -2px -2px 6px rgba(15,32,66,0.12);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--white);
+      cursor: pointer;
+      transition: all var(--transition);
+      text-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      letter-spacing: 0.3px;
+    }
+    .btn-complete:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow:
+        8px 8px 20px rgba(37,99,235,0.35),
+        -4px -4px 14px rgba(255,255,255,0.6),
+        inset 2px 2px 6px rgba(255,255,255,0.3),
+        inset -2px -2px 6px rgba(15,32,66,0.12);
+    }
+    .btn-complete:active {
+      transform: translateY(2px) scale(0.97);
+      box-shadow:
+        2px 2px 6px rgba(37,99,235,0.2),
+        -1px -1px 4px rgba(255,255,255,0.3),
+        inset 4px 4px 12px rgba(15,32,66,0.18),
+        inset -3px -3px 8px rgba(255,255,255,0.3);
+    }
+    .btn-complete:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-clear-order {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: var(--clay-bg-alt);
+      box-shadow: var(--shadow-clay);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--danger);
+      cursor: pointer;
+      transition: all var(--transition);
+      margin-top: 12px;
+    }
+    .btn-clear-order:hover { transform: translateY(-2px); box-shadow: var(--shadow-clay-hover); }
+    .btn-clear-order:active { transform: translateY(1px) scale(0.97); box-shadow: var(--shadow-clay-pressed); }
+
+    /* ═══════════════════════════════════════════
+       HISTORY BLOCK
+       ═══════════════════════════════════════════ */
+    .history-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .btn-action {
+      padding: 10px 20px;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: var(--clay-bg);
+      box-shadow: var(--shadow-clay);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-action:hover { transform: translateY(-2px); box-shadow: var(--shadow-clay-hover); }
+    .btn-action:active { transform: translateY(1px) scale(0.97); box-shadow: var(--shadow-clay-pressed); }
+    .btn-action.danger { color: var(--danger); }
+
+    .history-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-height: 440px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .history-feed::-webkit-scrollbar { width: 6px; }
+    .history-feed::-webkit-scrollbar-track { background: transparent; }
+    .history-feed::-webkit-scrollbar-thumb { background: var(--sky); border-radius: 0px; }
+
+    .history-card {
+      background: var(--clay-bg-alt);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-clay-inset);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      animation: slide-in 0.3s ease-out;
+      border-left: 5px solid var(--navy);
+    }
+    .history-card:nth-child(2n) { border-left-color: var(--sapphire); }
+    .history-card:nth-child(3n) { border-left-color: var(--ocean); }
+    .history-card:nth-child(4n) { border-left-color: var(--sky); }
+    .history-card:nth-child(5n) { border-left-color: var(--ice); }
+
+    .hc-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      grid-column: 1 / -1;
+    }
+    .hc-customer {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+    }
+    .hc-time {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+    .hc-items {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 4px 0;
+    }
+    .hc-chip {
+      padding: 4px 12px;
+      border-radius: 0px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--clay-bg);
+      box-shadow: 2px 2px 6px rgba(15,32,66,0.08), -1px -1px 4px rgba(255,255,255,0.6);
+      color: var(--text);
+    }
+    .hc-financials {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .hc-financials span { color: var(--text-light); }
+    .hc-financials strong { color: var(--text); }
+    .hc-financials .change-val { color: var(--sapphire); }
+
+    .history-empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .history-empty .big-emoji { font-size: 3rem; display: block; margin-bottom: 10px; }
+
+    .hc-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hc-delete-btn {
+      background: none;
+      border: none;
+      color: var(--danger);
+      font-size: 1rem;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: var(--transition);
+      padding: 2px 6px;
+      border-radius: 0px;
+    }
+    .hc-delete-btn:hover {
+      opacity: 1;
+      transform: scale(1.15);
+      background: rgba(239, 83, 80, 0.1);
+    }
+
+    /* ═══════════════════════════════════════════
+       MODAL DIALOG (Claymorphism)
+       ═══════════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 32, 66, 0.4);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-card {
+      background: var(--clay-bg);
+      border-radius: 0px;
+      padding: 30px 26px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(15, 32, 66, 0.25), var(--shadow-clay);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      transform: scale(0.9) translateY(20px);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .modal-overlay.active .modal-card {
+      transform: scale(1) translateY(0);
+    }
+    .modal-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .modal-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+    }
+    .btn-modal {
+      flex: 1;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 0px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .btn-modal.cancel {
+      background: var(--clay-bg-alt);
+      color: var(--text);
+      box-shadow: var(--shadow-clay);
+    }
+    .btn-modal.cancel:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-clay-hover);
+    }
+    .btn-modal.confirm-danger {
+      background: linear-gradient(135deg, var(--danger), var(--danger-deep));
+      color: var(--white);
+      box-shadow: 4px 4px 12px rgba(239, 83, 80, 0.3);
+    }
+    .btn-modal.confirm-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 6px 6px 16px rgba(239, 83, 80, 0.4);
+    }
+    .btn-modal:active {
+      transform: translateY(1px) scale(0.97);
+    }
+
+    /* ═══════════════════════════════════════════
+       TOAST NOTIFICATIONS
+       ═══════════════════════════════════════════ */
+    .toast-container {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .toast {
+      padding: 14px 22px;
+      border-radius: 0px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--white);
+      box-shadow: 6px 6px 18px rgba(0,0,0,0.15);
+      animation: toast-in 0.35s cubic-bezier(0.34,1.56,0.64,1), toast-out 0.3s ease 2.7s forwards;
+      pointer-events: none;
+    }
+    .toast.success { background: linear-gradient(135deg, var(--ocean), var(--sapphire)); }
+    .toast.error { background: linear-gradient(135deg, var(--danger), var(--danger-deep)); }
+    .toast.info { background: linear-gradient(135deg, var(--sky), var(--royal)); }
+    @keyframes toast-in {
+      0% { opacity: 0; transform: translateX(40px) scale(0.8); }
+      100% { opacity: 1; transform: translateX(0) scale(1); }
+    }
+    @keyframes toast-out {
+      0% { opacity: 1; transform: translateX(0); }
+      100% { opacity: 0; transform: translateX(40px); }
+    }
+
+    /* ═══════════════════════════════════════════
+       CONFETTI BURST (CSS only)
+       ═══════════════════════════════════════════ */
+    .confetti-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 10px; height: 10px;
+      border-radius: 0px;
+      opacity: 0;
+      animation: confetti-fall 1.2s ease forwards;
+    }
+    @keyframes confetti-fall {
+      0% { opacity: 1; transform: translateY(-40px) rotate(0deg) scale(1); }
+      100% { opacity: 0; transform: translateY(100vh) rotate(720deg) scale(0.3); }
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .app-container {
+        grid-template-columns: 1fr;
+      }
+      .block-order   { grid-column: 1; grid-row: 1; }
+      .block-checkout { grid-column: 1; grid-row: 2; }
+      .block-history { grid-column: 1; grid-row: 3; }
+    }
+    @media (max-width: 480px) {
+      .header h1 { font-size: 1.7rem; }
+      .block { padding: 20px 16px; }
+      .menu-grid { grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 10px; }
+      .total-display .amount { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-title-wrap">
+      <img src="logo.png" alt="Logo" class="header-logo">
+      <h1>Department of Creative Economy</h1>
+    </div>
+  </header>
+
+  <div class="app-container">
+
+    <!-- ═══ BLOCK 1: Customer & Menu ═══ -->
+    <section class="block block-order" id="block-order">
+      <div class="block-title">
+        <span class="icon" style="background: var(--sky);">🛒</span>
+        Pelanggan &amp; Menu
+      </div>
+
+      <div class="clay-input-wrap">
+        <label for="customer-name">Nama Pelanggan</label>
+        <input class="clay-input" type="text" id="customer-name" placeholder="cth. Sarah" autocomplete="off">
+      </div>
+
+      <div class="clay-input-wrap">
+        <label>Daftar Menu</label>
+        <div class="menu-grid" id="menu-grid">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <div class="order-section">
+        <div class="section-label">📋 Pesanan Saat Ini</div>
+        <div class="order-list" id="order-list">
+          <div class="order-empty" id="order-empty">Ketuk menu untuk mulai memesan!</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ BLOCK 2: Checkout ═══ -->
+    <section class="block block-checkout" id="block-checkout">
+      <div class="block-title">
+        <span class="icon" style="background: var(--ocean);">💰</span>
+        Pembayaran
+      </div>
+
+      <div class="total-display">
+        <div class="label">Total Harga</div>
+        <div class="amount" id="total-amount">Rp 0</div>
+      </div>
+
+      <div class="pay-method-wrap">
+        <label>Metode Pembayaran</label>
+        <div class="pay-method-toggle" id="pay-method-toggle">
+          <button id="pay-cash" class="active" type="button">💵 Tunai</button>
+          <button id="pay-qris" type="button">📱 QRIS</button>
+        </div>
+      </div>
+
+      <div class="cash-section" id="cash-section">
+        <div class="clay-input-wrap">
+          <label for="cash-received">Input Uang Diterima</label>
+          <div class="cash-input-group">
+            <span class="cash-prefix">Rp</span>
+            <input class="cash-input-field" type="number" id="cash-received" placeholder="Ketik nominal di sini..." min="0" step="500" inputmode="numeric">
+            <button class="cash-clear-btn" id="btn-clear-cash" type="button" title="Kosongkan">✕</button>
+          </div>
+        </div>
+
+        <div class="quick-cash" id="quick-cash">
+          <!-- Rendered by JS -->
+        </div>
+
+        <div class="change-display neutral" id="change-display">
+          <div class="label">Kembalian</div>
+          <div class="amount" id="change-amount">Rp 0</div>
+        </div>
+      </div>
+
+      <div class="qris-section hidden" id="qris-section">
+        <div class="qris-display">
+          <span class="qris-icon">📱</span>
+          <div class="qris-label">Pembayaran QRIS</div>
+          <div class="qris-status">Siap Dibayar</div>
+        </div>
+      </div>
+
+      <button class="btn-complete" id="btn-complete" disabled>🧾 Selesaikan Transaksi</button>
+      <button class="btn-clear-order" id="btn-clear-order">✕ Hapus Pesanan</button>
+    </section>
+
+    <!-- ═══ BLOCK 3: History ═══ -->
+    <section class="block block-history" id="block-history">
+      <div class="block-title">
+        <span class="icon" style="background: var(--sapphire);">📜</span>
+        Riwayat Transaksi
+      </div>
+
+      <div class="history-actions">
+        <button class="btn-action danger" id="btn-clear-history">🗑️ Hapus Riwayat</button>
+      </div>
+
+      <div class="history-feed" id="history-feed">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Modal Konfirmasi Hapus Riwayat -->
+  <div class="modal-overlay" id="clear-modal">
+    <div class="modal-card">
+      <span class="modal-icon">🗑️</span>
+      <h3 class="modal-title">Hapus Riwayat Transaksi?</h3>
+      <p class="modal-desc">Semua data transaksi yang tersimpan akan dihapus secara permanen dan tidak dapat dikembalikan.</p>
+      <div class="modal-buttons">
+        <button type="button" class="btn-modal cancel" id="btn-cancel-clear">Batal</button>
+        <button type="button" class="btn-modal confirm-danger" id="btn-confirm-clear">Ya, Hapus Semua</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script>
+    /* ═══════════════════════════════════════════
+       DATA
+       ═══════════════════════════════════════════ */
+    const MENU_ITEMS = [
+      // Makanan
+      { id: 1, name: 'Risol',          category: 'makanan', price: 3500, emoji: '🥟', color: 'c-ocean' },
+      { id: 2, name: 'Piscok',         category: 'makanan', price: 1500, emoji: '🍫', color: 'c-ocean' },
+      { id: 3, name: 'Cheese Roll',    category: 'makanan', price: 2000, emoji: '🧀', color: 'c-ocean' },
+      // Minuman
+      { id: 4, name: 'Es Teh',         category: 'minuman', price: 3000, emoji: '🥤', color: 'c-ocean' },
+      { id: 5, name: 'Nutrisari',      category: 'minuman', price: 5000, emoji: '🍊', color: 'c-ocean' },
+      { id: 6, name: 'Goodday Freeze', category: 'minuman', price: 5000, emoji: '☕', color: 'c-ocean' },
+    ];
+
+    const QUICK_CASH_PRESETS = [
+      { label: 'Pas', value: 'exact' },
+      { label: '5k',   value: 5000 },
+      { label: '10k',  value: 10000 },
+      { label: '20k',  value: 20000 },
+      { label: '50k',  value: 50000 },
+      { label: '100k', value: 100000 },
+    ];
+
+    const LS_KEY = 'bazaar_pos_history';
+
+    /* ═══════════════════════════════════════════
+       STATE
+       ═══════════════════════════════════════════ */
+    let currentOrder = [];   // [{ menuItem, qty }]
+    let txHistory = loadHistory();
+
+    /* ═══════════════════════════════════════════
+       DOM REFS
+       ═══════════════════════════════════════════ */
+    const $menuGrid      = document.getElementById('menu-grid');
+    const $orderList     = document.getElementById('order-list');
+    const $orderEmpty    = document.getElementById('order-empty');
+    const $totalAmount   = document.getElementById('total-amount');
+    const $cashReceived  = document.getElementById('cash-received');
+    const $btnClearCash  = document.getElementById('btn-clear-cash');
+    const $quickCash     = document.getElementById('quick-cash');
+    const $changeDisplay = document.getElementById('change-display');
+    const $changeAmount  = document.getElementById('change-amount');
+    const $btnComplete   = document.getElementById('btn-complete');
+    const $btnClearOrder = document.getElementById('btn-clear-order');
+    const $historyFeed   = document.getElementById('history-feed');
+    const $btnClearHist  = document.getElementById('btn-clear-history');
+    const $customerName  = document.getElementById('customer-name');
+    const $toastContainer= document.getElementById('toast-container');
+    const $payCash       = document.getElementById('pay-cash');
+    const $payQris       = document.getElementById('pay-qris');
+    const $cashSection   = document.getElementById('cash-section');
+    const $qrisSection   = document.getElementById('qris-section');
+    const $clearModal    = document.getElementById('clear-modal');
+    const $btnCancelClear= document.getElementById('btn-cancel-clear');
+    const $btnConfirmClear = document.getElementById('btn-confirm-clear');
+
+    let paymentMethod = 'cash'; // 'cash' or 'qris'
+
+    /* ═══════════════════════════════════════════
+       HELPERS
+       ═══════════════════════════════════════════ */
+    function formatRp(n) {
+      return 'Rp ' + Number(n).toLocaleString('id-ID');
+    }
+
+    function getTotal() {
+      return currentOrder.reduce((sum, o) => sum + o.menuItem.price * o.qty, 0);
+    }
+
+    function toast(msg, type = 'info') {
+      const el = document.createElement('div');
+      el.className = 'toast ' + type;
+      el.textContent = msg;
+      $toastContainer.appendChild(el);
+      setTimeout(() => el.remove(), 3200);
+    }
+
+    function confetti() {
+      const overlay = document.createElement('div');
+      overlay.className = 'confetti-overlay';
+      document.body.appendChild(overlay);
+      const colors = ['#0f2042','#1e3a5f','#2563eb','#3b82f6','#60a5fa','#93c5fd'];
+      for (let i = 0; i < 40; i++) {
+        const p = document.createElement('div');
+        p.className = 'confetti-piece';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.animationDelay = Math.random() * 0.5 + 's';
+        p.style.animationDuration = (0.8 + Math.random() * 0.8) + 's';
+        p.style.width = (6 + Math.random() * 8) + 'px';
+        p.style.height = (6 + Math.random() * 8) + 'px';
+        overlay.appendChild(p);
+      }
+      setTimeout(() => overlay.remove(), 2000);
+    }
+
+    /* ═══════════════════════════════════════════
+       RENDER: MENU GRID (Horizontal)
+       ═══════════════════════════════════════════ */
+    function renderMenuGrid() {
+      $menuGrid.innerHTML = '';
+      MENU_ITEMS.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'menu-card ' + item.color;
+        card.id = 'menu-item-' + item.id;
+
+        const inOrder = currentOrder.find(o => o.menuItem.id === item.id);
+
+        card.innerHTML = `
+          <span class="emoji">${item.emoji}</span>
+          <div class="item-name">${item.name}</div>
+          <div class="item-price">${formatRp(item.price)}</div>
+          ${inOrder ? `<span class="badge">${inOrder.qty}</span>` : ''}
+        `;
+        card.addEventListener('click', () => addToOrder(item));
+        $menuGrid.appendChild(card);
+      });
+    }
+
+    /* ═══════════════════════════════════════════
+       RENDER: ORDER LIST
+       ═══════════════════════════════════════════ */
+    function renderOrderList() {
+      if (currentOrder.length === 0) {
+        $orderList.innerHTML = '<div class="order-empty">Ketuk menu untuk mulai memesan!</div>';
+        return;
+      }
+      $orderList.innerHTML = '';
+      currentOrder.forEach((entry, idx) => {
+        const el = document.createElement('div');
+        el.className = 'order-item';
+        el.innerHTML = `
+          <span class="oi-name">${entry.menuItem.emoji} ${entry.menuItem.name}</span>
+          <div class="oi-qty">
+            <button id="qty-minus-${idx}" title="Kurangi">−</button>
+            <span>${entry.qty}</span>
+            <button id="qty-plus-${idx}" title="Tambah">+</button>
+          </div>
+          <span class="oi-price">${formatRp(entry.menuItem.price * entry.qty)}</span>
+          <button class="oi-remove" id="remove-item-${idx}" title="Hapus">✕</button>
+        `;
+        el.querySelector(`#qty-minus-${idx}`).addEventListener('click', () => changeQty(idx, -1));
+        el.querySelector(`#qty-plus-${idx}`).addEventListener('click', () => changeQty(idx, 1));
+        el.querySelector(`#remove-item-${idx}`).addEventListener('click', () => removeItem(idx));
+        $orderList.appendChild(el);
+      });
+    }
+
+    /* ═══════════════════════════════════════════
+       RENDER: CHECKOUT
+       ═══════════════════════════════════════════ */
+    function renderCheckout() {
+      const total = getTotal();
+      $totalAmount.textContent = formatRp(total);
+
+      // QRIS mode
+      if (paymentMethod === 'qris') {
+        $btnComplete.disabled = total === 0;
+        return;
+      }
+
+      // Cash mode
+      const cashStr = $cashReceived.value;
+      const cash = cashStr === '' ? null : Number(cashStr);
+
+      if (cash === null || isNaN(cash)) {
+        $changeDisplay.className = 'change-display neutral';
+        $changeAmount.textContent = 'Rp 0';
+        $btnComplete.disabled = true;
+        return;
+      }
+
+      const change = cash - total;
+
+      if (total === 0) {
+        $changeDisplay.className = 'change-display neutral';
+        $changeAmount.textContent = 'Rp 0';
+        $btnComplete.disabled = true;
+        return;
+      }
+
+      if (change < 0) {
+        $changeDisplay.className = 'change-display negative';
+        $changeAmount.textContent = '−' + formatRp(Math.abs(change));
+        $btnComplete.disabled = true;
+      } else {
+        $changeDisplay.className = 'change-display positive';
+        $changeAmount.textContent = formatRp(change);
+        $btnComplete.disabled = false;
+      }
+    }
+
+    function setPaymentMethod(method) {
+      paymentMethod = method;
+      $payCash.classList.toggle('active', method === 'cash');
+      $payQris.classList.toggle('active', method === 'qris');
+      $cashSection.classList.toggle('hidden', method !== 'cash');
+      $qrisSection.classList.toggle('hidden', method !== 'qris');
+      if (method === 'qris') {
+        $cashReceived.value = '';
+      } else {
+        $cashReceived.focus();
+      }
+      renderCheckout();
+    }
+
+    /* ═══════════════════════════════════════════
+       RENDER: QUICK CASH
+       ═══════════════════════════════════════════ */
+    function renderQuickCash() {
+      $quickCash.innerHTML = '';
+      QUICK_CASH_PRESETS.forEach(preset => {
+        const btn = document.createElement('button');
+        btn.className = 'quick-btn' + (preset.value === 'exact' ? ' exact' : '');
+        btn.textContent = preset.label;
+        btn.id = 'quick-cash-' + (preset.value === 'exact' ? 'exact' : preset.value);
+        btn.addEventListener('click', () => {
+          if (preset.value === 'exact') {
+            $cashReceived.value = getTotal();
+          } else {
+            $cashReceived.value = preset.value;
+          }
+          renderCheckout();
+          $cashReceived.focus();
+        });
+        $quickCash.appendChild(btn);
+      });
+    }
+
+    /* ═══════════════════════════════════════════
+       RENDER: HISTORY
+       ═══════════════════════════════════════════ */
+    function renderHistory() {
+      if (!txHistory || txHistory.length === 0) {
+        $historyFeed.innerHTML = `
+          <div class="history-empty">
+            <span class="big-emoji">📭</span>
+            Belum ada transaksi. Selesaikan penjualan pertamamu!
+          </div>
+        `;
+        return;
+      }
+      $historyFeed.innerHTML = '';
+      // Show newest first
+      [...txHistory].reverse().forEach(tx => {
+        const card = document.createElement('div');
+        card.className = 'history-card';
+
+        const itemChips = tx.items.map(i =>
+          `<span class="hc-chip">${i.emoji} ${i.name} ×${i.qty}</span>`
+        ).join('');
+
+        const methodBadge = tx.method === 'QRIS'
+          ? '<span class="hc-chip" style="background:var(--sapphire);color:#fff;">📱 QRIS</span>'
+          : '<span class="hc-chip" style="background:var(--ocean);color:#fff;">💵 Tunai</span>';
+
+        card.innerHTML = `
+          <div class="hc-header">
+            <span class="hc-customer">👤 ${escapeHtml(tx.customer || 'Tamu')}</span>
+            ${methodBadge}
+            <div class="hc-actions">
+              <span class="hc-time">${tx.time}</span>
+              <button class="hc-delete-btn" title="Hapus transaksi ini" onclick="deleteSingleTx(${tx.id})">✕</button>
+            </div>
+          </div>
+          <div class="hc-items">${itemChips}</div>
+          <div class="hc-financials">
+            <div><span>Total:</span> <strong>${formatRp(tx.total)}</strong></div>
+            <div><span>Bayar:</span> <strong>${formatRp(tx.cash)}</strong></div>
+            <div><span>Kembali:</span> <strong class="change-val">${formatRp(tx.change)}</strong></div>
+          </div>
+        `;
+        $historyFeed.appendChild(card);
+      });
+    }
+
+    function deleteSingleTx(txId) {
+      txHistory = txHistory.filter(t => t.id !== txId);
+      saveHistory();
+      renderHistory();
+      toast('1 transaksi dihapus.', 'info');
+    }
+
+    function escapeHtml(str) {
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    /* ═══════════════════════════════════════════
+       ORDER ACTIONS
+       ═══════════════════════════════════════════ */
+    function addToOrder(menuItem) {
+      const existing = currentOrder.find(o => o.menuItem.id === menuItem.id);
+      if (existing) {
+        existing.qty++;
+      } else {
+        currentOrder.push({ menuItem, qty: 1 });
+      }
+      renderAll();
+    }
+
+    function changeQty(idx, delta) {
+      currentOrder[idx].qty += delta;
+      if (currentOrder[idx].qty <= 0) {
+        currentOrder.splice(idx, 1);
+      }
+      renderAll();
+    }
+
+    function removeItem(idx) {
+      currentOrder.splice(idx, 1);
+      renderAll();
+    }
+
+    function clearOrder() {
+      currentOrder = [];
+      $cashReceived.value = '';
+      $customerName.value = '';
+      renderAll();
+    }
+
+    /* ═══════════════════════════════════════════
+       TRANSACTION COMPLETE
+       ═══════════════════════════════════════════ */
+    function completeTransaction() {
+      const total = getTotal();
+
+      if (paymentMethod === 'cash') {
+        const cash = Number($cashReceived.value);
+        const change = cash - total;
+        if (currentOrder.length === 0 || isNaN(cash) || change < 0) return;
+
+        var txCash = cash;
+        var txChange = change;
+      } else {
+        // QRIS
+        if (currentOrder.length === 0 || total === 0) return;
+        var txCash = total;
+        var txChange = 0;
+      }
+
+      const now = new Date();
+      const timeStr = now.toLocaleString('id-ID', {
+        day: '2-digit', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+
+      const tx = {
+        id: Date.now(),
+        customer: $customerName.value.trim() || 'Tamu',
+        items: currentOrder.map(o => ({
+          name: o.menuItem.name,
+          emoji: o.menuItem.emoji,
+          price: o.menuItem.price,
+          qty: o.qty,
+        })),
+        total,
+        cash: txCash,
+        change: txChange,
+        method: paymentMethod === 'qris' ? 'QRIS' : 'Tunai',
+        time: timeStr,
+      };
+
+      txHistory.push(tx);
+      saveHistory();
+      confetti();
+      toast(`Transaksi untuk ${tx.customer} berhasil! 🎉`, 'success');
+      clearOrder();
+      setPaymentMethod('cash');
+    }
+
+    /* ═══════════════════════════════════════════
+       PERSISTENCE
+       ═══════════════════════════════════════════ */
+    function loadHistory() {
+      try {
+        const data = localStorage.getItem(LS_KEY);
+        return data ? JSON.parse(data) : [];
+      } catch (e) {
+        console.error('Error loading history:', e);
+        return [];
+      }
+    }
+
+    function saveHistory() {
+      try {
+        localStorage.setItem(LS_KEY, JSON.stringify(txHistory));
+      } catch (e) {
+        console.error('Error saving history:', e);
+      }
+    }
+
+    /* ═══════════════════════════════════════════
+       CLEAR HISTORY (Dengan Modal Konfirmasi)
+       ═══════════════════════════════════════════ */
+    function openClearModal() {
+      if (!txHistory || txHistory.length === 0) {
+        toast('Riwayat sudah kosong.', 'info');
+        return;
+      }
+      $clearModal.classList.add('active');
+    }
+
+    function closeClearModal() {
+      $clearModal.classList.remove('active');
+    }
+
+    function confirmClearHistory() {
+      txHistory = [];
+      saveHistory();
+      renderHistory();
+      closeClearModal();
+      toast('Semua riwayat berhasil dihapus! 🗑️', 'info');
+    }
+
+    /* ═══════════════════════════════════════════
+       MASTER RENDER
+       ═══════════════════════════════════════════ */
+    function renderAll() {
+      renderMenuGrid();
+      renderOrderList();
+      renderCheckout();
+      renderHistory();
+    }
+
+    /* ═══════════════════════════════════════════
+       EVENT BINDINGS
+       ═══════════════════════════════════════════ */
+    $cashReceived.addEventListener('input', renderCheckout);
+    $btnClearCash.addEventListener('click', () => {
+      $cashReceived.value = '';
+      renderCheckout();
+      $cashReceived.focus();
+    });
+    $btnComplete.addEventListener('click', completeTransaction);
+    $btnClearOrder.addEventListener('click', () => {
+      if (currentOrder.length === 0) return;
+      clearOrder();
+      setPaymentMethod('cash');
+      toast('Pesanan dihapus.', 'info');
+    });
+    $payCash.addEventListener('click', () => setPaymentMethod('cash'));
+    $payQris.addEventListener('click', () => setPaymentMethod('qris'));
+    $btnClearHist.addEventListener('click', openClearModal);
+    $btnCancelClear.addEventListener('click', closeClearModal);
+    $btnConfirmClear.addEventListener('click', confirmClearHistory);
+
+    // Tutup modal jika klik di luar box
+    $clearModal.addEventListener('click', (e) => {
+      if (e.target === $clearModal) closeClearModal();
+    });
+
+    /* ═══════════════════════════════════════════
+       INIT
+       ═══════════════════════════════════════════ */
+    renderQuickCash();
+    renderAll();
+  </script>
+</body>
+</html>
