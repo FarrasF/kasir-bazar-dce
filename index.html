@@ -10,71 +10,78 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     /* ═══════════════════════════════════════════
-       DESIGN TOKENS
+       DESIGN TOKENS (Cool Colours Palette)
        ═══════════════════════════════════════════ */
     :root {
       /* Background */
-      --bg: #e8eef6;
-      --bg-subtle: #dce5f0;
+      --bg: #e6f0f5;
+      --bg-subtle: #d6e8f0;
 
-      /* Blue palette — dark to light */
-      --navy: #0f2042;
-      --navy-deep: #0a1628;
-      --royal: #1e3a5f;
-      --royal-deep: #152d4d;
-      --sapphire: #2563eb;
-      --sapphire-deep: #1d4ed8;
-      --sapphire-shadow: #1e40af;
-      --ocean: #3b82f6;
-      --ocean-deep: #2563eb;
-      --sky: #60a5fa;
-      --sky-deep: #3b82f6;
-      --sky-shadow: #2563eb;
-      --sky-highlight: #bfdbfe;
-      --ice: #93c5fd;
-      --ice-deep: #60a5fa;
-      --ice-highlight: #dbeafe;
-      --powder: #bfdbfe;
-      --frost: #dbeafe;
+      /* 5-step Cool Colours Palette */
+      --cool-1: #0e3d4d; /* 1. Deepest Teal Navy */
+      --cool-2: #1d5f75; /* 2. Medium Deep Ocean Teal */
+      --cool-3: #43859d; /* 3. Steel Teal / Slate Blue */
+      --cool-4: #8ec5d8; /* 4. Soft Sky / Ice Blue */
+      --cool-5: #d6eaf0; /* 5. Pale Mist / Ice Tint */
 
-      /* Semantic mapped to blue shades */
-      --blue: var(--sky);
-      --blue-deep: var(--ocean);
-      --blue-shadow: var(--sapphire-shadow);
-      --blue-highlight: var(--ice-highlight);
+      /* Palette Mapping */
+      --navy: var(--cool-1);
+      --navy-deep: #082631;
+      --royal: var(--cool-2);
+      --royal-deep: #134657;
+      --sapphire: var(--cool-3);
+      --sapphire-deep: #316c82;
+      --sapphire-shadow: var(--cool-2);
+      --ocean: var(--cool-3);
+      --ocean-deep: var(--cool-2);
+      --sky: var(--cool-4);
+      --sky-deep: var(--cool-3);
+      --sky-shadow: var(--cool-2);
+      --sky-highlight: var(--cool-5);
+      --ice: #a8d7e7;
+      --ice-deep: var(--cool-4);
+      --ice-highlight: #eef7fa;
+      --powder: var(--cool-5);
+      --frost: #e9f4f8;
 
-      --peach: var(--ice);
-      --peach-deep: var(--sky);
-      --peach-shadow: var(--sapphire);
-      --peach-highlight: var(--frost);
+      /* Semantic mapped to cool palette */
+      --blue: var(--cool-3);
+      --blue-deep: var(--cool-2);
+      --blue-shadow: var(--cool-1);
+      --blue-highlight: var(--cool-5);
 
-      --mint: var(--ocean);
-      --mint-deep: var(--sapphire);
-      --mint-shadow: var(--royal);
-      --mint-highlight: var(--powder);
+      --peach: var(--cool-4);
+      --peach-deep: var(--cool-3);
+      --peach-shadow: var(--cool-2);
+      --peach-highlight: var(--cool-5);
 
-      --pink: var(--sapphire);
-      --pink-deep: var(--sapphire-deep);
-      --pink-shadow: var(--navy);
-      --pink-highlight: var(--ice-highlight);
+      --mint: var(--cool-3);
+      --mint-deep: var(--cool-2);
+      --mint-shadow: var(--cool-1);
+      --mint-highlight: var(--cool-5);
 
-      --lilac: var(--ice);
-      --lilac-deep: var(--sky);
-      --lilac-shadow: var(--royal);
-      --lilac-highlight: var(--frost);
+      --pink: var(--cool-2);
+      --pink-deep: var(--cool-1);
+      --pink-shadow: #082631;
+      --pink-highlight: var(--cool-5);
 
-      --yellow: var(--powder);
-      --yellow-deep: var(--sky);
+      --lilac: var(--cool-4);
+      --lilac-deep: var(--cool-3);
+      --lilac-shadow: var(--cool-1);
+      --lilac-highlight: var(--cool-5);
+
+      --yellow: var(--cool-5);
+      --yellow-deep: var(--cool-4);
 
       --white: #ffffff;
-      --clay-bg: #eef3fa;
-      --clay-bg-alt: #e2eaf5;
-      --text: #0f2042;
-      --text-light: #1e3a5f;
-      --text-muted: #6b8ab5;
+      --clay-bg: #eff7fa;
+      --clay-bg-alt: #e1f0f5;
+      --text: #0e3d4d;
+      --text-light: #1d5f75;
+      --text-muted: #5e8b9d;
       --danger: #ef5350;
       --danger-deep: #e53935;
-      --success: var(--ocean);
+      --success: var(--cool-2);
 
       --radius-sm: 0px;
       --radius: 0px;
@@ -82,25 +89,25 @@
       --radius-pill: 0px;
 
       --shadow-clay:
-        6px 6px 14px rgba(15, 32, 66, 0.18),
-        -3px -3px 10px rgba(255, 255, 255, 0.7),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(15, 32, 66, 0.10);
+        6px 6px 14px rgba(14, 61, 77, 0.16),
+        -3px -3px 10px rgba(255, 255, 255, 0.75),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.6),
+        inset -2px -2px 4px rgba(14, 61, 77, 0.08);
 
       --shadow-clay-inset:
-        inset 4px 4px 8px rgba(15, 32, 66, 0.10),
-        inset -2px -2px 6px rgba(255, 255, 255, 0.7);
+        inset 4px 4px 8px rgba(14, 61, 77, 0.10),
+        inset -2px -2px 6px rgba(255, 255, 255, 0.75);
 
       --shadow-clay-hover:
-        10px 10px 20px rgba(15, 32, 66, 0.17),
+        10px 10px 20px rgba(14, 61, 77, 0.16),
         -5px -5px 15px rgba(255, 255, 255, 0.9),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.6),
-        inset -2px -2px 4px rgba(15, 32, 66, 0.07);
+        inset 2px 2px 4px rgba(255, 255, 255, 0.7),
+        inset -2px -2px 4px rgba(14, 61, 77, 0.06);
 
       --shadow-clay-pressed:
-        2px 2px 4px rgba(15, 32, 66, 0.07),
+        2px 2px 4px rgba(14, 61, 77, 0.07),
         -1px -1px 3px rgba(255, 255, 255, 0.5),
-        inset 4px 4px 10px rgba(15, 32, 66, 0.17),
+        inset 4px 4px 10px rgba(14, 61, 77, 0.16),
         inset -3px -3px 8px rgba(255, 255, 255, 0.5);
 
       --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -115,7 +122,7 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       background: var(--bg);
       background-image:
-        linear-gradient(180deg, rgba(232, 238, 246, 0.80) 0%, rgba(220, 232, 246, 0.86) 100%),
+        linear-gradient(180deg, rgba(230, 240, 245, 0.85) 0%, rgba(214, 234, 240, 0.89) 100%),
         url('bg.jpg');
       background-size: cover;
       background-position: center center;
@@ -141,7 +148,7 @@
       align-items: center;
       justify-content: center;
       gap: 14px;
-      background: rgba(238, 243, 250, 0.90);
+      background: rgba(239, 247, 250, 0.92);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       padding: 10px 24px;
@@ -167,7 +174,7 @@
     .header h1 {
       font-size: 1.75rem;
       font-weight: 800;
-      background: linear-gradient(135deg, var(--navy), var(--sapphire), var(--sky));
+      background: linear-gradient(135deg, var(--cool-1), var(--cool-2), var(--cool-3));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -189,7 +196,7 @@
       gap: 24px;
     }
     .block {
-      background: rgba(238, 243, 250, 0.92);
+      background: rgba(239, 247, 250, 0.94);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-radius: var(--radius-lg);
@@ -255,9 +262,9 @@
     .clay-input::placeholder { color: var(--text-muted); }
     .clay-input:focus {
       box-shadow:
-        inset 4px 4px 10px rgba(37,99,235,0.18),
-        inset -2px -2px 8px rgba(255,255,255,0.8),
-        0 0 0 3px rgba(37,99,235,0.25);
+        inset 4px 4px 10px rgba(29, 95, 117, 0.18),
+        inset -2px -2px 8px rgba(255, 255, 255, 0.8),
+        0 0 0 3px rgba(67, 133, 157, 0.25);
     }
 
     /* ═══════════════════════════════════════════
@@ -270,7 +277,8 @@
     }
     .menu-card {
       background: var(--clay-bg);
-      border: 1.5px solid rgba(15, 32, 66, 0.06);
+      border: 1.5px solid rgba(14, 61, 77, 0.08);
+      border-bottom: 4px solid var(--cool-2);
       border-radius: var(--radius);
       padding: 16px 12px;
       text-align: center;
@@ -286,12 +294,16 @@
       position: absolute;
       inset: 0;
       border-radius: var(--radius);
-      opacity: 0.18;
+      background: var(--cool-2);
+      opacity: 0.08;
       transition: opacity var(--transition);
     }
     .menu-card:hover {
       box-shadow: var(--shadow-clay-hover);
       transform: translateY(-3px) scale(1.03);
+    }
+    .menu-card:hover::before {
+      opacity: 0.16;
     }
     .menu-card:active {
       box-shadow: var(--shadow-clay-pressed);
@@ -316,27 +328,13 @@
     .menu-card .item-price {
       font-weight: 800;
       font-size: 0.9rem;
-      color: var(--sapphire);
+      color: var(--cool-2);
     }
-
-    /* color bands for cards — blue shades */
-    .menu-card.c-navy    { border-bottom: 4px solid var(--navy); }
-    .menu-card.c-navy::before    { background: var(--navy); }
-    .menu-card.c-royal   { border-bottom: 4px solid var(--royal); }
-    .menu-card.c-royal::before   { background: var(--royal); }
-    .menu-card.c-sapphire { border-bottom: 4px solid var(--sapphire); }
-    .menu-card.c-sapphire::before { background: var(--sapphire); }
-    .menu-card.c-ocean   { border-bottom: 4px solid var(--ocean); }
-    .menu-card.c-ocean::before   { background: var(--ocean); }
-    .menu-card.c-sky     { border-bottom: 4px solid var(--sky); }
-    .menu-card.c-sky::before     { background: var(--sky); }
-    .menu-card.c-ice     { border-bottom: 4px solid var(--ice); }
-    .menu-card.c-ice::before     { background: var(--ice); }
 
     .menu-card .badge {
       position: absolute;
       top: 6px; right: 8px;
-      background: var(--sapphire);
+      background: var(--cool-2);
       color: var(--white);
       font-size: 0.72rem;
       font-weight: 700;
@@ -345,7 +343,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 2px 2px 6px rgba(37,99,235,0.4);
+      box-shadow: 2px 2px 6px rgba(29, 95, 117, 0.4);
       animation: pop-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     @keyframes pop-in {
@@ -375,7 +373,7 @@
     }
     .order-list::-webkit-scrollbar { width: 6px; }
     .order-list::-webkit-scrollbar-track { background: transparent; }
-    .order-list::-webkit-scrollbar-thumb { background: var(--sky); border-radius: 0px; }
+    .order-list::-webkit-scrollbar-thumb { background: var(--cool-4); border-radius: 0px; }
 
     .order-item {
       display: flex;
@@ -426,7 +424,7 @@
     .order-item .oi-price {
       font-weight: 800;
       font-size: 0.9rem;
-      color: var(--sapphire);
+      color: var(--cool-2);
       min-width: 70px;
       text-align: right;
     }
@@ -453,15 +451,15 @@
        CHECKOUT BLOCK
        ═══════════════════════════════════════════ */
     .total-display {
-      background: linear-gradient(135deg, var(--navy), var(--sapphire));
+      background: linear-gradient(135deg, var(--cool-1), var(--cool-2));
       border-radius: var(--radius-lg);
       padding: 24px 28px;
       text-align: center;
       box-shadow:
-        6px 6px 14px rgba(30,58,95,0.30),
-        -3px -3px 10px rgba(255,255,255,0.5),
-        inset 2px 2px 6px rgba(255,255,255,0.2),
-        inset -2px -2px 6px rgba(10,22,40,0.15);
+        6px 6px 14px rgba(14, 61, 77, 0.28),
+        -3px -3px 10px rgba(255, 255, 255, 0.5),
+        inset 2px 2px 6px rgba(255, 255, 255, 0.25),
+        inset -2px -2px 6px rgba(8, 38, 49, 0.2);
       margin-bottom: 22px;
       position: relative;
       overflow: hidden;
@@ -498,22 +496,22 @@
       background: var(--clay-bg-alt);
       border-radius: var(--radius);
       box-shadow: var(--shadow-clay-inset);
-      border: 1.5px solid rgba(15, 32, 66, 0.08);
+      border: 1.5px solid rgba(14, 61, 77, 0.08);
       padding: 4px 8px 4px 16px;
       transition: var(--transition);
       margin-bottom: 12px;
     }
     .cash-input-group:focus-within {
       box-shadow:
-        inset 4px 4px 10px rgba(37,99,235,0.18),
+        inset 4px 4px 10px rgba(29, 95, 117, 0.18),
         inset -2px -2px 8px rgba(255,255,255,0.8),
-        0 0 0 3px rgba(37,99,235,0.25);
-      border-color: var(--sapphire);
+        0 0 0 3px rgba(67, 133, 157, 0.25);
+      border-color: var(--cool-2);
     }
     .cash-prefix {
       font-size: 1.1rem;
       font-weight: 800;
-      color: var(--sapphire);
+      color: var(--cool-2);
       user-select: none;
       margin-right: 8px;
     }
@@ -598,7 +596,11 @@
       box-shadow: var(--shadow-clay-pressed);
       transform: translateY(1px) scale(0.96);
     }
-    .quick-btn.exact { background: var(--sapphire); color: var(--white); box-shadow: 4px 4px 10px rgba(37,99,235,0.3), -2px -2px 8px rgba(255,255,255,0.6), inset 2px 2px 4px rgba(255,255,255,0.4), inset -2px -2px 4px rgba(30,64,175,0.15); }
+    .quick-btn.exact {
+      background: var(--cool-2);
+      color: var(--white);
+      box-shadow: 4px 4px 10px rgba(29, 95, 117, 0.3), -2px -2px 8px rgba(255,255,255,0.6), inset 2px 2px 4px rgba(255,255,255,0.4), inset -2px -2px 4px rgba(14, 61, 77, 0.2);
+    }
 
     /* Change Display */
     .change-display {
@@ -609,12 +611,12 @@
       transition: all 0.35s ease;
     }
     .change-display.positive {
-      background: linear-gradient(135deg, var(--ocean), var(--sapphire));
+      background: linear-gradient(135deg, var(--cool-3), var(--cool-2));
       box-shadow:
-        4px 4px 12px rgba(59,130,246,0.3),
+        4px 4px 12px rgba(29, 95, 117, 0.3),
         -2px -2px 8px rgba(255,255,255,0.5),
         inset 2px 2px 4px rgba(255,255,255,0.3),
-        inset -2px -2px 4px rgba(30,64,175,0.12);
+        inset -2px -2px 4px rgba(14, 61, 77, 0.15);
     }
     .change-display.negative {
       background: linear-gradient(135deg, var(--danger), var(--danger-deep));
@@ -673,7 +675,7 @@
       border-radius: var(--radius-sm);
       overflow: hidden;
       box-shadow: var(--shadow-clay-inset);
-      border: 1.5px solid rgba(15, 32, 66, 0.08);
+      border: 1.5px solid rgba(14, 61, 77, 0.08);
     }
     .pay-method-toggle button {
       flex: 1;
@@ -692,11 +694,11 @@
       gap: 8px;
     }
     .pay-method-toggle button.active {
-      background: var(--sapphire);
+      background: var(--cool-2);
       color: var(--white);
       box-shadow:
         inset 2px 2px 4px rgba(255,255,255,0.2),
-        inset -2px -2px 4px rgba(15,32,66,0.15);
+        inset -2px -2px 4px rgba(14, 61, 77, 0.15);
     }
     .pay-method-toggle button:not(.active):hover {
       background: var(--frost);
@@ -711,12 +713,12 @@
       padding: 24px;
       text-align: center;
       margin-bottom: 18px;
-      background: linear-gradient(135deg, var(--ocean), var(--sapphire));
+      background: linear-gradient(135deg, var(--cool-3), var(--cool-2));
       box-shadow:
-        4px 4px 12px rgba(59,130,246,0.3),
+        4px 4px 12px rgba(29, 95, 117, 0.3),
         -2px -2px 8px rgba(255,255,255,0.5),
         inset 2px 2px 4px rgba(255,255,255,0.3),
-        inset -2px -2px 4px rgba(30,64,175,0.12);
+        inset -2px -2px 4px rgba(14, 61, 77, 0.15);
     }
     .qris-display .qris-icon {
       font-size: 2.4rem;
@@ -749,12 +751,12 @@
       padding: 18px;
       border: none;
       border-radius: var(--radius);
-      background: linear-gradient(135deg, var(--sky), var(--navy));
+      background: linear-gradient(135deg, var(--cool-3), var(--cool-1));
       box-shadow:
-        6px 6px 14px rgba(37,99,235,0.3),
+        6px 6px 14px rgba(14, 61, 77, 0.28),
         -3px -3px 10px rgba(255,255,255,0.5),
         inset 2px 2px 6px rgba(255,255,255,0.3),
-        inset -2px -2px 6px rgba(15,32,66,0.12);
+        inset -2px -2px 6px rgba(14, 61, 77, 0.15);
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 700;
       font-size: 1.15rem;
@@ -767,17 +769,17 @@
     .btn-complete:hover {
       transform: translateY(-3px) scale(1.02);
       box-shadow:
-        8px 8px 20px rgba(37,99,235,0.35),
+        8px 8px 20px rgba(14, 61, 77, 0.35),
         -4px -4px 14px rgba(255,255,255,0.6),
         inset 2px 2px 6px rgba(255,255,255,0.3),
-        inset -2px -2px 6px rgba(15,32,66,0.12);
+        inset -2px -2px 6px rgba(14, 61, 77, 0.15);
     }
     .btn-complete:active {
       transform: translateY(2px) scale(0.97);
       box-shadow:
-        2px 2px 6px rgba(37,99,235,0.2),
+        2px 2px 6px rgba(14, 61, 77, 0.2),
         -1px -1px 4px rgba(255,255,255,0.3),
-        inset 4px 4px 12px rgba(15,32,66,0.18),
+        inset 4px 4px 12px rgba(14, 61, 77, 0.18),
         inset -3px -3px 8px rgba(255,255,255,0.3);
     }
     .btn-complete:disabled {
@@ -842,7 +844,7 @@
     }
     .history-feed::-webkit-scrollbar { width: 6px; }
     .history-feed::-webkit-scrollbar-track { background: transparent; }
-    .history-feed::-webkit-scrollbar-thumb { background: var(--sky); border-radius: 0px; }
+    .history-feed::-webkit-scrollbar-thumb { background: var(--cool-4); border-radius: 0px; }
 
     .history-card {
       background: var(--clay-bg-alt);
@@ -853,12 +855,42 @@
       grid-template-columns: 1fr auto;
       gap: 8px;
       animation: slide-in 0.3s ease-out;
-      border-left: 5px solid var(--navy);
+      border-left: 6px solid var(--cool-2);
+      transition: all var(--transition);
     }
-    .history-card:nth-child(2n) { border-left-color: var(--sapphire); }
-    .history-card:nth-child(3n) { border-left-color: var(--ocean); }
-    .history-card:nth-child(4n) { border-left-color: var(--sky); }
-    .history-card:nth-child(5n) { border-left-color: var(--ice); }
+    .history-card.method-cash {
+      border-left-color: var(--cool-1);
+    }
+    .history-card.method-qris {
+      border-left-color: var(--cool-4);
+      background: linear-gradient(135deg, rgba(225, 240, 245, 0.95), rgba(214, 234, 240, 0.65));
+    }
+
+    .hc-badge-cash {
+      padding: 4px 12px;
+      border-radius: 0px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--cool-1), var(--cool-2));
+      color: #ffffff;
+      box-shadow: 2px 2px 6px rgba(14, 61, 77, 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hc-badge-qris {
+      padding: 4px 12px;
+      border-radius: 0px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--cool-4), var(--cool-3));
+      color: #ffffff;
+      box-shadow: 2px 2px 6px rgba(29, 95, 117, 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
 
     .hc-header {
       display: flex;
@@ -890,7 +922,7 @@
       font-size: 0.78rem;
       font-weight: 600;
       background: var(--clay-bg);
-      box-shadow: 2px 2px 6px rgba(15,32,66,0.08), -1px -1px 4px rgba(255,255,255,0.6);
+      box-shadow: 2px 2px 6px rgba(14, 61, 77, 0.08), -1px -1px 4px rgba(255, 255, 255, 0.6);
       color: var(--text);
     }
     .hc-financials {
@@ -904,7 +936,7 @@
     }
     .hc-financials span { color: var(--text-light); }
     .hc-financials strong { color: var(--text); }
-    .hc-financials .change-val { color: var(--sapphire); }
+    .hc-financials .change-val { color: var(--cool-2); }
 
     .history-empty {
       text-align: center;
@@ -943,7 +975,7 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(15, 32, 66, 0.4);
+      background: rgba(14, 61, 77, 0.45);
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
       display: flex;
@@ -966,7 +998,7 @@
       max-width: 400px;
       width: 100%;
       text-align: center;
-      box-shadow: 0 20px 40px rgba(15, 32, 66, 0.25), var(--shadow-clay);
+      box-shadow: 0 20px 40px rgba(14, 61, 77, 0.25), var(--shadow-clay);
       border: 2px solid rgba(255, 255, 255, 0.8);
       transform: scale(0.9) translateY(20px);
       transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -1051,9 +1083,9 @@
       animation: toast-in 0.35s cubic-bezier(0.34,1.56,0.64,1), toast-out 0.3s ease 2.7s forwards;
       pointer-events: none;
     }
-    .toast.success { background: linear-gradient(135deg, var(--ocean), var(--sapphire)); }
+    .toast.success { background: linear-gradient(135deg, var(--cool-3), var(--cool-2)); }
     .toast.error { background: linear-gradient(135deg, var(--danger), var(--danger-deep)); }
-    .toast.info { background: linear-gradient(135deg, var(--sky), var(--royal)); }
+    .toast.info { background: linear-gradient(135deg, var(--cool-4), var(--cool-2)); color: var(--cool-1); }
     @keyframes toast-in {
       0% { opacity: 0; transform: translateX(40px) scale(0.8); }
       100% { opacity: 1; transform: translateX(0) scale(1); }
@@ -1118,7 +1150,7 @@
     <!-- ═══ BLOCK 1: Customer & Menu ═══ -->
     <section class="block block-order" id="block-order">
       <div class="block-title">
-        <span class="icon" style="background: var(--sky);">🛒</span>
+        <span class="icon" style="background: var(--cool-4); color: var(--cool-1);">🛒</span>
         Pelanggan &amp; Menu
       </div>
 
@@ -1145,7 +1177,7 @@
     <!-- ═══ BLOCK 2: Checkout ═══ -->
     <section class="block block-checkout" id="block-checkout">
       <div class="block-title">
-        <span class="icon" style="background: var(--ocean);">💰</span>
+        <span class="icon" style="background: var(--cool-3); color: var(--white);">💰</span>
         Pembayaran
       </div>
 
@@ -1167,7 +1199,7 @@
           <label for="cash-received">Input Uang Diterima</label>
           <div class="cash-input-group">
             <span class="cash-prefix">Rp</span>
-            <input class="cash-input-field" type="number" id="cash-received" placeholder="Ketik nominal di sini..." min="0" step="500" inputmode="numeric">
+            <input class="cash-input-field" type="text" id="cash-received" placeholder="Ketik nominal di sini..." inputmode="numeric" autocomplete="off">
             <button class="cash-clear-btn" id="btn-clear-cash" type="button" title="Kosongkan">✕</button>
           </div>
         </div>
@@ -1197,7 +1229,7 @@
     <!-- ═══ BLOCK 3: History ═══ -->
     <section class="block block-history" id="block-history">
       <div class="block-title">
-        <span class="icon" style="background: var(--sapphire);">📜</span>
+        <span class="icon" style="background: var(--cool-2); color: var(--white);">📜</span>
         Riwayat Transaksi
       </div>
 
@@ -1233,13 +1265,13 @@
        ═══════════════════════════════════════════ */
     const MENU_ITEMS = [
       // Makanan
-      { id: 1, name: 'Risol',          category: 'makanan', price: 3500, emoji: '🥟', color: 'c-ocean' },
-      { id: 2, name: 'Piscok',         category: 'makanan', price: 1500, emoji: '🍫', color: 'c-ocean' },
-      { id: 3, name: 'Cheese Roll',    category: 'makanan', price: 2000, emoji: '🧀', color: 'c-ocean' },
+      { id: 1, name: 'Risol',          category: 'makanan', price: 3500, emoji: '🥟' },
+      { id: 2, name: 'Piscok',         category: 'makanan', price: 1500, emoji: '🍫' },
+      { id: 3, name: 'Cheese Roll',    category: 'makanan', price: 2000, emoji: '🧀' },
       // Minuman
-      { id: 4, name: 'Es Teh',         category: 'minuman', price: 3000, emoji: '🥤', color: 'c-ocean' },
-      { id: 5, name: 'Nutrisari',      category: 'minuman', price: 5000, emoji: '🍊', color: 'c-ocean' },
-      { id: 6, name: 'Goodday Freeze', category: 'minuman', price: 5000, emoji: '☕', color: 'c-ocean' },
+      { id: 4, name: 'Es Teh',         category: 'minuman', price: 3000, emoji: '🥤' },
+      { id: 5, name: 'Nutrisari',      category: 'minuman', price: 5000, emoji: '🍊' },
+      { id: 6, name: 'Goodday Freeze', category: 'minuman', price: 5000, emoji: '☕' },
     ];
 
     const QUICK_CASH_PRESETS = [
@@ -1294,6 +1326,16 @@
       return 'Rp ' + Number(n).toLocaleString('id-ID');
     }
 
+    function formatDots(n) {
+      if (n === '' || n === null || isNaN(n)) return '';
+      return Number(n).toLocaleString('id-ID');
+    }
+
+    function getRawCash() {
+      const raw = $cashReceived.value.replace(/\D/g, '');
+      return raw === '' ? null : Number(raw);
+    }
+
     function getTotal() {
       return currentOrder.reduce((sum, o) => sum + o.menuItem.price * o.qty, 0);
     }
@@ -1310,7 +1352,7 @@
       const overlay = document.createElement('div');
       overlay.className = 'confetti-overlay';
       document.body.appendChild(overlay);
-      const colors = ['#0f2042','#1e3a5f','#2563eb','#3b82f6','#60a5fa','#93c5fd'];
+      const colors = ['#0e3d4d', '#1d5f75', '#43859d', '#8ec5d8', '#d6eaf0'];
       for (let i = 0; i < 40; i++) {
         const p = document.createElement('div');
         p.className = 'confetti-piece';
@@ -1332,7 +1374,7 @@
       $menuGrid.innerHTML = '';
       MENU_ITEMS.forEach(item => {
         const card = document.createElement('div');
-        card.className = 'menu-card ' + item.color;
+        card.className = 'menu-card';
         card.id = 'menu-item-' + item.id;
 
         const inOrder = currentOrder.find(o => o.menuItem.id === item.id);
@@ -1391,8 +1433,7 @@
       }
 
       // Cash mode
-      const cashStr = $cashReceived.value;
-      const cash = cashStr === '' ? null : Number(cashStr);
+      const cash = getRawCash();
 
       if (cash === null || isNaN(cash)) {
         $changeDisplay.className = 'change-display neutral';
@@ -1421,6 +1462,16 @@
       }
     }
 
+    function handleCashInput() {
+      const raw = $cashReceived.value.replace(/\D/g, '');
+      if (!raw) {
+        $cashReceived.value = '';
+      } else {
+        $cashReceived.value = Number(raw).toLocaleString('id-ID');
+      }
+      renderCheckout();
+    }
+
     function setPaymentMethod(method) {
       paymentMethod = method;
       $payCash.classList.toggle('active', method === 'cash');
@@ -1447,9 +1498,10 @@
         btn.id = 'quick-cash-' + (preset.value === 'exact' ? 'exact' : preset.value);
         btn.addEventListener('click', () => {
           if (preset.value === 'exact') {
-            $cashReceived.value = getTotal();
+            const total = getTotal();
+            $cashReceived.value = total > 0 ? formatDots(total) : '';
           } else {
-            $cashReceived.value = preset.value;
+            $cashReceived.value = formatDots(preset.value);
           }
           renderCheckout();
           $cashReceived.focus();
@@ -1474,16 +1526,17 @@
       $historyFeed.innerHTML = '';
       // Show newest first
       [...txHistory].reverse().forEach(tx => {
+        const isQris = tx.method === 'QRIS';
         const card = document.createElement('div');
-        card.className = 'history-card';
+        card.className = `history-card ${isQris ? 'method-qris' : 'method-cash'}`;
 
         const itemChips = tx.items.map(i =>
           `<span class="hc-chip">${i.emoji} ${i.name} ×${i.qty}</span>`
         ).join('');
 
-        const methodBadge = tx.method === 'QRIS'
-          ? '<span class="hc-chip" style="background:var(--sapphire);color:#fff;">📱 QRIS</span>'
-          : '<span class="hc-chip" style="background:var(--ocean);color:#fff;">💵 Tunai</span>';
+        const methodBadge = isQris
+          ? '<span class="hc-badge-qris">📱 QRIS</span>'
+          : '<span class="hc-badge-cash">💵 Tunai</span>';
 
         card.innerHTML = `
           <div class="hc-header">
@@ -1558,9 +1611,9 @@
       const total = getTotal();
 
       if (paymentMethod === 'cash') {
-        const cash = Number($cashReceived.value);
-        const change = cash - total;
-        if (currentOrder.length === 0 || isNaN(cash) || change < 0) return;
+        const cash = getRawCash();
+        const change = cash !== null ? cash - total : -1;
+        if (currentOrder.length === 0 || cash === null || isNaN(cash) || change < 0) return;
 
         var txCash = cash;
         var txChange = change;
@@ -1658,7 +1711,7 @@
     /* ═══════════════════════════════════════════
        EVENT BINDINGS
        ═══════════════════════════════════════════ */
-    $cashReceived.addEventListener('input', renderCheckout);
+    $cashReceived.addEventListener('input', handleCashInput);
     $btnClearCash.addEventListener('click', () => {
       $cashReceived.value = '';
       renderCheckout();
