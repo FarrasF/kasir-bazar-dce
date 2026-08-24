@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dashboard HPP & Laporan Keuangan POS Bazaar - Department of Creative Economy">
+  <title>HPP &amp; Laporan Keuangan - POS Bazaar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS (Cool Colours Palette)
+       ═══════════════════════════════════════════ */
+    :root {
+      --bg: #e6f0f5;
+      --bg-subtle: #d6e8f0;
+
+      --cool-1: #0e3d4d; /* Deepest Teal Navy */
+      --cool-2: #1d5f75; /* Medium Deep Ocean Teal */
+      --cool-3: #43859d; /* Steel Teal / Slate Blue */
+      --cool-4: #8ec5d8; /* Soft Sky / Ice Blue */
+      --cool-5: #d6eaf0; /* Pale Mist / Ice Tint */
+
+      --navy-deep: #082631;
+      --white: #ffffff;
+      --clay-bg: #eff7fa;
+      --clay-bg-alt: #e1f0f5;
+      --text: #0e3d4d;
+      --text-light: #1d5f75;
+      --text-muted: #5e8b9d;
+      --danger: #ef5350;
+      --danger-deep: #e53935;
+      --success: #10b981;
+
+      --shadow-clay:
+        6px 6px 14px rgba(14, 61, 77, 0.16),
+        -3px -3px 10px rgba(255, 255, 255, 0.75),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.6),
+        inset -2px -2px 4px rgba(14, 61, 77, 0.08);
+
+      --shadow-clay-inset:
+        inset 4px 4px 8px rgba(14, 61, 77, 0.10),
+        inset -2px -2px 6px rgba(255, 255, 255, 0.75);
+
+      --shadow-clay-hover:
+        10px 10px 20px rgba(14, 61, 77, 0.16),
+        -5px -5px 15px rgba(255, 255, 255, 0.9),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.7),
+        inset -2px -2px 4px rgba(14, 61, 77, 0.06);
+
+      --shadow-clay-pressed:
+        2px 2px 4px rgba(14, 61, 77, 0.07),
+        -1px -1px 3px rgba(255, 255, 255, 0.5),
+        inset 4px 4px 10px rgba(14, 61, 77, 0.16),
+        inset -3px -3px 8px rgba(255, 255, 255, 0.5);
+
+      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ═══════════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      background-image:
+        linear-gradient(180deg, rgba(230, 240, 245, 0.88) 0%, rgba(214, 234, 240, 0.92) 100%),
+        url('bg.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* ═══════════════════════════════════════════
+       HEADER (Centered)
+       ═══════════════════════════════════════════ */
+    .header {
+      padding: 24px 20px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 1340px;
+    }
+    .header-title-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: rgba(239, 247, 250, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 10px 24px;
+      border-radius: 9999px;
+      box-shadow: var(--shadow-clay);
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      transition: all var(--transition);
+    }
+    .header-title-wrap:hover {
+      box-shadow: var(--shadow-clay-hover);
+      transform: translateY(-2px);
+    }
+    .header-logo-circle {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy-deep), var(--cool-1));
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 2px 2px 8px rgba(14, 61, 77, 0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      flex-shrink: 0;
+    }
+    .header-logo {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.16));
+      flex-shrink: 0;
+    }
+    .header-logo-circle .header-logo {
+      width: 100%;
+      height: 100%;
+    }
+    .header h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--cool-1), var(--cool-2), var(--cool-3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.3px;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    /* ═══════════════════════════════════════════
+       BOTTOM FOOTER NAVIGATION (Tombol Kembali di Bawah)
+       ═══════════════════════════════════════════ */
+    .app-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px 36px;
+      width: 100%;
+    }
+    .nav-btn-back-bottom {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 1.02rem;
+      color: var(--cool-1);
+      background: linear-gradient(135deg, #e9f5f9 0%, #d2ecf5 100%);
+      box-shadow: var(--shadow-clay);
+      border: 2px solid rgba(255, 255, 255, 0.95);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .nav-btn-back-bottom:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: var(--shadow-clay-hover);
+      color: var(--cool-2);
+      border-color: #ffffff;
+    }
+    .nav-btn-back-bottom:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: var(--shadow-clay-pressed);
+    }
+
+    /* ═══════════════════════════════════════════
+       LAYOUT & BLOCKS
+       ═══════════════════════════════════════════ */
+    .app-container {
+      max-width: 1340px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .block {
+      background: rgba(239, 247, 250, 0.94);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 24px;
+      box-shadow: var(--shadow-clay);
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+    }
+
+    .block-header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .block-title {
+      font-size: 1.12rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+    }
+    .block-title .icon {
+      width: 34px; height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 2px 2px 6px rgba(14, 61, 77, 0.12);
+      flex-shrink: 0;
+    }
+    .block-desc {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    /* ═══════════════════════════════════════════
+       BLOCK 2: KPI SUMMARY CARDS
+       ═══════════════════════════════════════════ */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .kpi-card {
+      background: var(--clay-bg);
+      border: 1.5px solid rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow-clay);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-clay-hover);
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+    }
+    .kpi-card.revenue::before { background: linear-gradient(180deg, var(--cool-3), var(--cool-1)); }
+    .kpi-card.cost::before    { background: linear-gradient(180deg, #f59e0b, #d97706); }
+    .kpi-card.profit::before  { background: linear-gradient(180deg, #10b981, #059669); }
+    .kpi-card.margin::before  { background: linear-gradient(180deg, #8b5cf6, #6d28d9); }
+
+    .kpi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .kpi-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+    }
+    .kpi-icon-pill {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      box-shadow: 2px 2px 6px rgba(14, 61, 77, 0.08), inset 1px 1px 2px rgba(255, 255, 255, 0.8);
+      background: var(--clay-bg-alt);
+    }
+    .kpi-value {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+      margin-bottom: 4px;
+      word-break: break-word;
+    }
+    .kpi-card.profit .kpi-value { color: #065f46; }
+    .kpi-card.margin .kpi-value { color: #4c1d95; }
+    .kpi-sub {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    .kpi-secondary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1.5px dashed rgba(14, 61, 77, 0.15);
+    }
+    .kpi-sub-card {
+      background: rgba(255, 255, 255, 0.6);
+      padding: 10px 14px;
+      box-shadow: var(--shadow-clay-inset);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .kpi-sub-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .kpi-sub-val {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    /* ═══════════════════════════════════════════
+       TABLES (Clay Table Style)
+       ═══════════════════════════════════════════ */
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--clay-bg);
+      box-shadow: var(--shadow-clay-inset);
+      padding: 6px;
+    }
+    .clay-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 6px;
+      min-width: 680px;
+    }
+    .clay-table th {
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      text-align: left;
+      border-bottom: 2px solid rgba(14, 61, 77, 0.1);
+    }
+    .clay-table th.text-right,
+    .clay-table td.text-right {
+      text-align: right;
+    }
+    .clay-table th.text-center,
+    .clay-table td.text-center {
+      text-align: center;
+    }
+    .clay-table td {
+      padding: 10px 14px;
+      background: #ffffff;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      box-shadow: 1px 1px 4px rgba(14, 61, 77, 0.05);
+      vertical-align: middle;
+    }
+
+    .clay-table tr.total-row td {
+      background: linear-gradient(135deg, #e1eff5, #d0e7f1);
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--cool-1);
+      border-top: 2px solid var(--cool-3);
+    }
+
+    .item-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .item-emoji { font-size: 1.3rem; }
+    .item-info { display: flex; flex-direction: column; }
+    .item-name { font-weight: 700; color: var(--text); }
+    .item-cat {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--cool-3);
+    }
+
+    .input-hpp-wrap {
+      display: inline-flex;
+      align-items: center;
+      background: var(--clay-bg-alt);
+      box-shadow: var(--shadow-clay-inset);
+      border: 1px solid rgba(14, 61, 77, 0.15);
+      padding: 4px 8px;
+      width: 130px;
+    }
+    .input-hpp-wrap .prefix {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-right: 4px;
+    }
+    .input-hpp {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      text-align: right;
+      outline: none;
+    }
+
+    .badge-profit {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #065f46;
+      background: #d1fae5;
+      gap: 4px;
+    }
+    .badge-profit.negative {
+      color: #991b1b;
+      background: #fee2e2;
+    }
+
+    /* Progress bar for sales */
+    .qty-bar-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    .qty-bar-bg {
+      width: 60px;
+      height: 6px;
+      background: #e2e8f0;
+      overflow: hidden;
+    }
+    .qty-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cool-4), var(--cool-2));
+    }
+
+    /* Buttons */
+    .btn-clay {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: var(--shadow-clay);
+    }
+    .btn-clay:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-clay-hover);
+    }
+    .btn-clay:active {
+      transform: translateY(1px);
+      box-shadow: var(--shadow-clay-pressed);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cool-3), var(--cool-2));
+      color: #ffffff;
+    }
+    .btn-secondary {
+      background: var(--clay-bg-alt);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    /* ═══════════════════════════════════════════
+       RECENT TRANSACTIONS LIST
+       ═══════════════════════════════════════════ */
+    .tx-preview-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 320px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .tx-preview-item {
+      background: #ffffff;
+      padding: 12px 16px;
+      box-shadow: 1px 1px 4px rgba(14, 61, 77, 0.06);
+      display: grid;
+      grid-template-columns: 130px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      border-left: 3px solid var(--cool-3);
+    }
+    .tx-preview-time {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .tx-preview-cust {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 0.88rem;
+    }
+    .tx-preview-items {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+    .tx-preview-total {
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--cool-1);
+      text-align: right;
+    }
+
+    .empty-state-box {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--text-muted);
+    }
+
+    /* ═══════════════════════════════════════════
+       TOAST NOTIFICATIONS
+       ═══════════════════════════════════════════ */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .toast {
+      padding: 12px 18px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: #ffffff;
+      box-shadow: 4px 4px 14px rgba(0,0,0,0.15);
+      animation: toast-in 0.3s ease, toast-out 0.3s ease 2.7s forwards;
+      pointer-events: none;
+    }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.info { background: linear-gradient(135deg, var(--cool-3), var(--cool-2)); }
+    .toast.warning { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    @keyframes toast-in {
+      0% { opacity: 0; transform: translateX(30px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes toast-out {
+      0% { opacity: 1; transform: translateX(0); }
+      100% { opacity: 0; transform: translateX(30px); }
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .kpi-secondary-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .header-container { justify-content: center; text-align: center; }
+      .header h1 { font-size: 1.3rem; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .kpi-secondary-grid { grid-template-columns: 1fr; }
+      .tx-preview-item { grid-template-columns: 1fr; gap: 4px; }
+      .tx-preview-total { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-container">
+      <div class="header-title-wrap">
+        <div class="header-logo-circle left-logo">
+          <img src="logo.png" alt="Logo" class="header-logo">
+        </div>
+        <h1>Department of Creative Economy</h1>
+        <img src="logo-himafor.png" alt="Logo HIMAFOR" class="header-logo right-logo">
+      </div>
+    </div>
+  </header>
+
+  <main class="app-container">
+
+    <!-- ═══ BLOCK 2: Dashboard Ringkasan Keuangan ═══ -->
+    <section class="block" id="block-summary">
+      <div class="block-header-wrap">
+        <div>
+          <div class="block-title">
+            <span class="icon" style="background: var(--cool-3); color: #ffffff;">📊</span>
+            Dashboard Ringkasan Keuangan
+          </div>
+          <div class="block-desc">Kalkulasi otomatis dari transaksi penjualan dan konfigurasi HPP.</div>
+        </div>
+        <button class="btn-clay btn-secondary" id="btn-refresh" type="button" style="padding: 6px 14px; font-size: 0.8rem;">
+          🔄 Refresh Data
+        </button>
+      </div>
+
+      <!-- Core 4 KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card revenue">
+          <div class="kpi-top">
+            <span class="kpi-label">Total Omset</span>
+            <div class="kpi-icon-pill">💵</div>
+          </div>
+          <div class="kpi-value" id="kpi-omset">Rp 0</div>
+          <div class="kpi-sub">Total Pendapatan Kotor</div>
+        </div>
+
+        <div class="kpi-card cost">
+          <div class="kpi-top">
+            <span class="kpi-label">Total Modal (HPP)</span>
+            <div class="kpi-icon-pill">📦</div>
+          </div>
+          <div class="kpi-value" id="kpi-hpp">Rp 0</div>
+          <div class="kpi-sub">Total Biaya Pokok Produksi</div>
+        </div>
+
+        <div class="kpi-card profit">
+          <div class="kpi-top">
+            <span class="kpi-label">Laba Kotor</span>
+            <div class="kpi-icon-pill">📈</div>
+          </div>
+          <div class="kpi-value" id="kpi-laba">Rp 0</div>
+          <div class="kpi-sub">Omset dikurangi Modal HPP</div>
+        </div>
+
+        <div class="kpi-card margin">
+          <div class="kpi-top">
+            <span class="kpi-label">Margin Keuntungan</span>
+            <div class="kpi-icon-pill">🎯</div>
+          </div>
+          <div class="kpi-value" id="kpi-margin">0.0%</div>
+          <div class="kpi-sub">Rasio Laba Terhadap Omset</div>
+        </div>
+      </div>
+
+      <!-- Secondary Metrics Bar -->
+      <div class="kpi-secondary-grid">
+        <div class="kpi-sub-card">
+          <span class="kpi-sub-title">Total Transaksi</span>
+          <span class="kpi-sub-val" id="kpi-tx-count">0 Transaksi</span>
+        </div>
+        <div class="kpi-sub-card">
+          <span class="kpi-sub-title">Total Porsi Terjual</span>
+          <span class="kpi-sub-val" id="kpi-qty-count">0 Porsi</span>
+        </div>
+        <div class="kpi-sub-card">
+          <span class="kpi-sub-title">Metode Pembayaran</span>
+          <span class="kpi-sub-val" id="kpi-method-breakdown">0 Tunai / 0 QRIS</span>
+        </div>
+        <div class="kpi-sub-card">
+          <span class="kpi-sub-title">Rata-rata Transaksi</span>
+          <span class="kpi-sub-val" id="kpi-avg-tx">Rp 0</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ BLOCK 1: Input / Setting HPP Menu ═══ -->
+    <section class="block" id="block-hpp-config">
+      <div class="block-header-wrap">
+        <div>
+          <div class="block-title">
+            <span class="icon" style="background: #f59e0b; color: #ffffff;">⚙️</span>
+            Input &amp; Konfigurasi HPP Menu
+          </div>
+          <div class="block-desc">Tentukan modal (HPP) per porsi tiap menu. Tersimpan otomatis di browser.</div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-clay btn-secondary" id="btn-reset-hpp" type="button">🔄 Reset</button>
+          <button class="btn-clay btn-primary" id="btn-save-hpp" type="button">💾 Simpan HPP</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="clay-table">
+          <thead>
+            <tr>
+              <th>Menu</th>
+              <th class="text-right">Harga Jual (POS)</th>
+              <th class="text-right">HPP Modal Satuan</th>
+              <th class="text-right">Estimasi Laba / Porsi</th>
+              <th class="text-right">Margin Satuan</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-hpp-config">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ═══ BLOCK 3: Tabel Performa Menu ═══ -->
+    <section class="block" id="block-menu-performance">
+      <div class="block-header-wrap">
+        <div>
+          <div class="block-title">
+            <span class="icon" style="background: #10b981; color: #ffffff;">📋</span>
+            Tabel Performa Penjualan Menu
+          </div>
+          <div class="block-desc">Rincian penjualan porsi, omset, modal terpakai, dan perolehan laba per menu.</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="clay-table">
+          <thead>
+            <tr>
+              <th style="width: 40px;" class="text-center">No</th>
+              <th>Nama Menu</th>
+              <th class="text-right">Harga Jual</th>
+              <th class="text-right">HPP Modal</th>
+              <th class="text-right">Porsi Terjual</th>
+              <th class="text-right">Total Omset</th>
+              <th class="text-right">Total Modal</th>
+              <th class="text-right">Total Laba</th>
+              <th class="text-right">Margin %</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-performance">
+            <!-- Rendered by JS -->
+          </tbody>
+          <tfoot id="tfoot-performance">
+            <!-- Rendered by JS -->
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- ═══ SECTION: Riwayat Transaksi Terkini ═══ -->
+    <section class="block" id="block-recent-tx">
+      <div class="block-header-wrap">
+        <div>
+          <div class="block-title">
+            <span class="icon" style="background: var(--cool-1); color: #ffffff;">📜</span>
+            Riwayat Transaksi Penjualan
+          </div>
+          <div class="block-desc">Daftar transaksi yang menjadi sumber data perhitungan keuangan.</div>
+        </div>
+      </div>
+
+      <div class="tx-preview-list" id="tx-preview-list">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══ BOTTOM NAVIGATION: KEMBALI KE KASIR POS ═══ -->
+  <footer class="app-footer">
+    <a href="index.html" class="nav-btn-back-bottom" id="btn-back-pos" title="Kembali ke Halaman Kasir">
+      <span>← Kembali ke Kasir POS</span>
+    </a>
+  </footer>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script>
+    /* ═══════════════════════════════════════════
+       CONSTANTS & DEFAULTS
+       ═══════════════════════════════════════════ */
+    const LS_KEY_TX = 'bazar_transactions';
+    const LS_LEGACY_KEY = 'bazaar_pos_history';
+    const LS_KEY_HPP = 'bazar_hpp_config';
+
+    const DEFAULT_MENUS = [
+      { id: 1, name: 'Risol',          category: 'makanan', price: 3500, defaultHpp: 2000, emoji: '🥟' },
+      { id: 2, name: 'Piscok',         category: 'makanan', price: 1500, defaultHpp: 800,  emoji: '🍫' },
+      { id: 3, name: 'Cheese Roll',    category: 'makanan', price: 2000, defaultHpp: 1000, emoji: '🧀' },
+      { id: 4, name: 'Es Teh',         category: 'minuman', price: 3000, defaultHpp: 1200, emoji: '🥤' },
+      { id: 5, name: 'Nutrisari',      category: 'minuman', price: 5000, defaultHpp: 2500, emoji: '🍊' },
+      { id: 6, name: 'Goodday Freeze', category: 'minuman', price: 5000, defaultHpp: 2500, emoji: '☕' },
+    ];
+
+    /* ═══════════════════════════════════════════
+       STATE
+       ═══════════════════════════════════════════ */
+    let transactions = [];
+    let hppConfig = {};
+
+    /* ═══════════════════════════════════════════
+       DOM REFS
+       ═══════════════════════════════════════════ */
+    const $tbodyHpp       = document.getElementById('tbody-hpp-config');
+    const $tbodyPerf      = document.getElementById('tbody-performance');
+    const $tfootPerf      = document.getElementById('tfoot-performance');
+    const $txPreviewList  = document.getElementById('tx-preview-list');
+    const $toastContainer = document.getElementById('toast-container');
+
+    const $kpiOmset       = document.getElementById('kpi-omset');
+    const $kpiHpp         = document.getElementById('kpi-hpp');
+    const $kpiLaba        = document.getElementById('kpi-laba');
+    const $kpiMargin      = document.getElementById('kpi-margin');
+    const $kpiTxCount     = document.getElementById('kpi-tx-count');
+    const $kpiQtyCount    = document.getElementById('kpi-qty-count');
+    const $kpiMethod      = document.getElementById('kpi-method-breakdown');
+    const $kpiAvgTx       = document.getElementById('kpi-avg-tx');
+
+    const $btnSaveHpp     = document.getElementById('btn-save-hpp');
+    const $btnResetHpp    = document.getElementById('btn-reset-hpp');
+    const $btnRefresh     = document.getElementById('btn-refresh');
+
+    /* ═══════════════════════════════════════════
+       HELPERS
+       ═══════════════════════════════════════════ */
+    function formatRp(n) {
+      return 'Rp ' + Math.round(Number(n) || 0).toLocaleString('id-ID');
+    }
+
+    function formatNumber(n) {
+      return (Number(n) || 0).toLocaleString('id-ID');
+    }
+
+    function toast(msg, type = 'info') {
+      const el = document.createElement('div');
+      el.className = 'toast ' + type;
+      el.textContent = msg;
+      $toastContainer.appendChild(el);
+      setTimeout(() => el.remove(), 3000);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    /* ═══════════════════════════════════════════
+       DATA LOAD & SAVE
+       ═══════════════════════════════════════════ */
+    function loadTransactions() {
+      try {
+        let raw = localStorage.getItem(LS_KEY_TX);
+        if (!raw || raw === '[]') {
+          const legacy = localStorage.getItem(LS_LEGACY_KEY);
+          if (legacy && legacy !== '[]') {
+            raw = legacy;
+            localStorage.setItem(LS_KEY_TX, legacy);
+          }
+        }
+        transactions = raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        console.error('Error load tx:', e);
+        transactions = [];
+      }
+    }
+
+    function loadHppConfig() {
+      try {
+        const raw = localStorage.getItem(LS_KEY_HPP);
+        if (raw) {
+          hppConfig = JSON.parse(raw);
+        } else {
+          hppConfig = {};
+          DEFAULT_MENUS.forEach(m => {
+            hppConfig[m.name] = m.defaultHpp;
+          });
+          saveHppConfig(false);
+        }
+      } catch (e) {
+        console.error('Error load HPP:', e);
+        hppConfig = {};
+        DEFAULT_MENUS.forEach(m => {
+          hppConfig[m.name] = m.defaultHpp;
+        });
+      }
+    }
+
+    function saveHppConfig(showToast = true) {
+      try {
+        localStorage.setItem(LS_KEY_HPP, JSON.stringify(hppConfig));
+        if (showToast) {
+          toast('Pengaturan HPP berhasil disimpan! 💾', 'success');
+        }
+      } catch (e) {
+        console.error('Error save HPP:', e);
+      }
+    }
+
+    /* ═══════════════════════════════════════════
+       COMPUTE METRICS
+       ═══════════════════════════════════════════ */
+    function computeMetrics() {
+      let totalOmset = 0;
+      let totalHpp = 0;
+      let totalQty = 0;
+      let cashCount = 0;
+      let qrisCount = 0;
+
+      const itemStats = {};
+
+      DEFAULT_MENUS.forEach(m => {
+        const hpp = typeof hppConfig[m.name] === 'number' ? hppConfig[m.name] : m.defaultHpp;
+        itemStats[m.name] = {
+          name: m.name,
+          category: m.category,
+          price: m.price,
+          hpp: hpp,
+          emoji: m.emoji,
+          qtySold: 0,
+          revenue: 0,
+          totalHpp: 0,
+          profit: 0,
+          marginPct: 0
+        };
+      });
+
+      transactions.forEach(tx => {
+        if (tx.method === 'QRIS') qrisCount++;
+        else cashCount++;
+
+        if (Array.isArray(tx.items)) {
+          tx.items.forEach(item => {
+            const name = item.name;
+            const qty = Number(item.qty) || 0;
+            const price = Number(item.price) || 0;
+
+            if (!itemStats[name]) {
+              const hpp = typeof hppConfig[name] === 'number' ? hppConfig[name] : 0;
+              itemStats[name] = {
+                name: name,
+                category: item.category || 'menu',
+                price: price,
+                hpp: hpp,
+                emoji: item.emoji || '🍽️',
+                qtySold: 0,
+                revenue: 0,
+                totalHpp: 0,
+                profit: 0,
+                marginPct: 0
+              };
+            }
+
+            const currentHpp = itemStats[name].hpp;
+            const itemRev = price * qty;
+            const itemCost = currentHpp * qty;
+
+            itemStats[name].qtySold += qty;
+            itemStats[name].revenue += itemRev;
+            itemStats[name].totalHpp += itemCost;
+
+            totalQty += qty;
+            totalOmset += itemRev;
+            totalHpp += itemCost;
+          });
+        }
+      });
+
+      Object.values(itemStats).forEach(stat => {
+        stat.profit = stat.revenue - stat.totalHpp;
+        stat.marginPct = stat.revenue > 0 ? (stat.profit / stat.revenue) * 100 : 0;
+      });
+
+      const grossProfit = totalOmset - totalHpp;
+      const marginPct = totalOmset > 0 ? (grossProfit / totalOmset) * 100 : 0;
+      const txCount = transactions.length;
+      const avgTx = txCount > 0 ? totalOmset / txCount : 0;
+
+      return {
+        totalOmset,
+        totalHpp,
+        grossProfit,
+        marginPct,
+        totalQty,
+        txCount,
+        cashCount,
+        qrisCount,
+        avgTx,
+        itemStats
+      };
+    }
+
+    /* ═══════════════════════════════════════════
+       RENDER FUNCTIONS
+       ═══════════════════════════════════════════ */
+    function renderKpis(metrics) {
+      $kpiOmset.textContent = formatRp(metrics.totalOmset);
+      $kpiHpp.textContent = formatRp(metrics.totalHpp);
+      $kpiLaba.textContent = formatRp(metrics.grossProfit);
+      $kpiMargin.textContent = metrics.marginPct.toFixed(1) + '%';
+
+      $kpiTxCount.textContent = `${formatNumber(metrics.txCount)} Transaksi`;
+      $kpiQtyCount.textContent = `${formatNumber(metrics.totalQty)} Porsi`;
+      $kpiMethod.textContent = `${metrics.cashCount} Tunai / ${metrics.qrisCount} QRIS`;
+      $kpiAvgTx.textContent = formatRp(metrics.avgTx);
+    }
+
+    function renderHppConfigTable() {
+      $tbodyHpp.innerHTML = '';
+
+      DEFAULT_MENUS.forEach(menu => {
+        const currentHpp = typeof hppConfig[menu.name] === 'number' ? hppConfig[menu.name] : menu.defaultHpp;
+        const profit = menu.price - currentHpp;
+        const marginPct = menu.price > 0 ? ((profit / menu.price) * 100).toFixed(1) : '0';
+        const isNegative = profit < 0;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <div class="item-cell">
+              <span class="item-emoji">${menu.emoji}</span>
+              <div class="item-info">
+                <span class="item-name">${menu.name}</span>
+                <span class="item-cat">${menu.category}</span>
+              </div>
+            </div>
+          </td>
+          <td class="text-right"><strong>${formatRp(menu.price)}</strong></td>
+          <td class="text-right">
+            <div class="input-hpp-wrap">
+              <span class="prefix">Rp</span>
+              <input type="text" class="input-hpp" data-menu="${menu.name}" value="${formatNumber(currentHpp)}" inputmode="numeric">
+            </div>
+          </td>
+          <td class="text-right">
+            <span class="badge-profit ${isNegative ? 'negative' : ''}" id="profit-badge-${menu.id}">
+              ${isNegative ? '−' : '+'}${formatRp(Math.abs(profit))}
+            </span>
+          </td>
+          <td class="text-right">
+            <strong style="color: ${isNegative ? 'var(--danger)' : 'var(--cool-1)'};" id="margin-val-${menu.id}">
+              ${marginPct}%
+            </strong>
+          </td>
+        `;
+
+        const input = tr.querySelector('.input-hpp');
+        input.addEventListener('input', (e) => {
+          const raw = e.target.value.replace(/\D/g, '');
+          const val = raw === '' ? 0 : Number(raw);
+          e.target.value = val === 0 && raw === '' ? '' : formatNumber(val);
+
+          hppConfig[menu.name] = val;
+          updateHppPreviewRow(menu, val, tr);
+          renderAll(false);
+        });
+
+        $tbodyHpp.appendChild(tr);
+      });
+    }
+
+    function updateHppPreviewRow(menu, hppVal, tr) {
+      const profit = menu.price - hppVal;
+      const marginPct = menu.price > 0 ? ((profit / menu.price) * 100).toFixed(1) : '0';
+      const isNegative = profit < 0;
+
+      const badge = tr.querySelector(`#profit-badge-${menu.id}`);
+      if (badge) {
+        badge.className = `badge-profit ${isNegative ? 'negative' : ''}`;
+        badge.textContent = `${isNegative ? '−' : '+'}${formatRp(Math.abs(profit))}`;
+      }
+
+      const marginEl = tr.querySelector(`#margin-val-${menu.id}`);
+      if (marginEl) {
+        marginEl.style.color = isNegative ? 'var(--danger)' : 'var(--cool-1)';
+        marginEl.textContent = `${marginPct}%`;
+      }
+    }
+
+    function renderPerformanceTable(metrics) {
+      $tbodyPerf.innerHTML = '';
+      $tfootPerf.innerHTML = '';
+
+      const items = Object.values(metrics.itemStats);
+      if (items.length === 0) {
+        $tbodyPerf.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">Belum ada data penjualan menu.</td></tr>`;
+        return;
+      }
+
+      const maxQty = Math.max(...items.map(i => i.qtySold), 1);
+      let totalQty = 0;
+      let totalOmset = 0;
+      let totalHpp = 0;
+      let totalProfit = 0;
+
+      items.forEach((item, index) => {
+        totalQty += item.qtySold;
+        totalOmset += item.revenue;
+        totalHpp += item.totalHpp;
+        totalProfit += item.profit;
+
+        const pct = item.qtySold > 0 ? Math.round((item.qtySold / maxQty) * 100) : 0;
+        const isNegativeProfit = item.profit < 0;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="text-center">${index + 1}</td>
+          <td>
+            <div class="item-cell">
+              <span class="item-emoji">${item.emoji}</span>
+              <div class="item-info">
+                <span class="item-name">${item.name}</span>
+                <span class="item-cat">${item.category}</span>
+              </div>
+            </div>
+          </td>
+          <td class="text-right">${formatRp(item.price)}</td>
+          <td class="text-right">${formatRp(item.hpp)}</td>
+          <td class="text-right">
+            <div class="qty-bar-wrap">
+              <strong>${formatNumber(item.qtySold)}</strong>
+              <div class="qty-bar-bg" title="${item.qtySold} porsi terjual">
+                <div class="qty-bar-fill" style="width: ${pct}%;"></div>
+              </div>
+            </div>
+          </td>
+          <td class="text-right" style="color: var(--cool-1); font-weight: 700;">${formatRp(item.revenue)}</td>
+          <td class="text-right" style="color: #d97706; font-weight: 700;">${formatRp(item.totalHpp)}</td>
+          <td class="text-right" style="color: ${isNegativeProfit ? 'var(--danger)' : '#059669'}; font-weight: 700;">
+            ${formatRp(item.profit)}
+          </td>
+          <td class="text-right">
+            <strong style="color: ${isNegativeProfit ? 'var(--danger)' : 'var(--cool-1)'};">
+              ${item.marginPct.toFixed(1)}%
+            </strong>
+          </td>
+        `;
+        $tbodyPerf.appendChild(tr);
+      });
+
+      const overallMargin = totalOmset > 0 ? ((totalProfit / totalOmset) * 100).toFixed(1) : '0.0';
+      const trTotal = document.createElement('tr');
+      trTotal.className = 'total-row';
+      trTotal.innerHTML = `
+        <td colspan="4" class="text-right" style="text-transform: uppercase;">TOTAL KESELURUHAN</td>
+        <td class="text-right"><strong>${formatNumber(totalQty)} Porsi</strong></td>
+        <td class="text-right">${formatRp(totalOmset)}</td>
+        <td class="text-right">${formatRp(totalHpp)}</td>
+        <td class="text-right" style="color: ${totalProfit < 0 ? 'var(--danger)' : '#047857'};">${formatRp(totalProfit)}</td>
+        <td class="text-right">${overallMargin}%</td>
+      `;
+      $tfootPerf.appendChild(trTotal);
+    }
+
+    function renderRecentTx() {
+      if (!transactions || transactions.length === 0) {
+        $txPreviewList.innerHTML = `
+          <div class="empty-state-box">
+            <div>Belum ada transaksi penjualan di POS.</div>
+          </div>
+        `;
+        return;
+      }
+
+      $txPreviewList.innerHTML = '';
+      [...transactions].reverse().forEach(tx => {
+        const itemSummary = (tx.items || []).map(i => `${i.name} ×${i.qty}`).join(', ');
+        const item = document.createElement('div');
+        item.className = 'tx-preview-item';
+        item.innerHTML = `
+          <span class="tx-preview-time">${tx.time || '-'}</span>
+          <div>
+            <div class="tx-preview-cust">👤 ${escapeHtml(tx.customer || 'Tamu')} <span style="font-size: 0.72rem; color: var(--cool-3); margin-left: 6px;">[${tx.method || 'Tunai'}]</span></div>
+            <div class="tx-preview-items">${escapeHtml(itemSummary)}</div>
+          </div>
+          <div class="tx-preview-total">${formatRp(tx.total)}</div>
+        `;
+        $txPreviewList.appendChild(item);
+      });
+    }
+
+    function renderAll(rebuildHppTable = true) {
+      const metrics = computeMetrics();
+      renderKpis(metrics);
+      if (rebuildHppTable) {
+        renderHppConfigTable();
+      }
+      renderPerformanceTable(metrics);
+      renderRecentTx();
+    }
+
+    /* ═══════════════════════════════════════════
+       EVENT LISTENERS & INIT
+       ═══════════════════════════════════════════ */
+    $btnSaveHpp.addEventListener('click', () => saveHppConfig(true));
+    $btnResetHpp.addEventListener('click', () => {
+      hppConfig = {};
+      DEFAULT_MENUS.forEach(m => { hppConfig[m.name] = m.defaultHpp; });
+      saveHppConfig(false);
+      renderAll(true);
+      toast('HPP direset ke nilai default.', 'info');
+    });
+
+    $btnRefresh.addEventListener('click', () => {
+      loadTransactions();
+      loadHppConfig();
+      renderAll(true);
+      toast('Data berhasil diperbarui! 🔄', 'info');
+    });
+
+    loadTransactions();
+    loadHppConfig();
+    renderAll(true);
+  </script>
+</body>
+</html>
