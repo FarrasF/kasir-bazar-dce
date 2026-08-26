@@ -424,6 +424,14 @@
       overflow: hidden;
     }
 
+    .menu-card.jastip-card {
+      border-bottom: 4px solid #f59e0b;
+    }
+
+    .menu-card.jastip-card::before {
+      background: #f59e0b;
+    }
+
     .menu-card::before {
       content: '';
       position: absolute;
@@ -743,6 +751,7 @@
 
     .cash-input-field[type=number] {
       -moz-appearance: textfield;
+      appearance: textfield;
     }
 
     .cash-clear-btn {
@@ -1565,7 +1574,14 @@
       <div class="clay-input-wrap">
         <label>Daftar Menu</label>
         <div class="menu-grid" id="menu-grid">
-          <!-- Rendered by JS -->
+          <!-- Rendered by JS: 6 Menu Utama -->
+        </div>
+      </div>
+
+      <div class="clay-input-wrap">
+        <label>Jasa Titip</label>
+        <div class="menu-grid" id="jastip-grid">
+          <!-- Rendered by JS: 9 Jasa Titip -->
         </div>
       </div>
 
@@ -1677,15 +1693,25 @@
     /* ═══════════════════════════════════════════
        DATA
        ═══════════════════════════════════════════ */
-    const MENU_ITEMS = [
-      // Makanan
+    const DEFAULT_MENU_ITEMS = [
+      // Menu Utama (Makanan)
       { id: 1, name: 'Risol', category: 'makanan', price: 3500, emoji: '🥟' },
       { id: 2, name: 'Piscok', category: 'makanan', price: 1500, emoji: '🍫' },
       { id: 3, name: 'Cheese Roll', category: 'makanan', price: 2000, emoji: '🧀' },
-      // Minuman
+      // Menu Utama (Minuman)
       { id: 4, name: 'Es Teh', category: 'minuman', price: 3000, emoji: '🥤' },
       { id: 5, name: 'Nutrisari', category: 'minuman', price: 5000, emoji: '🍊' },
       { id: 6, name: 'Goodday Freeze', category: 'minuman', price: 5000, emoji: '☕' },
+      // Kategori Baru: Jasa Titip
+      { id: 7, name: 'Cilok Bumbu Kacang', category: 'jastip', price: 5000, emoji: '🍡' },
+      { id: 8, name: 'Pisang Nugget', category: 'jastip', price: 5000, emoji: '🍌' },
+      { id: 9, name: 'Makaroni', category: 'jastip', price: 5000, emoji: '🍝' },
+      { id: 10, name: 'Basreng', category: 'jastip', price: 5000, emoji: '🍘' },
+      { id: 11, name: 'Tahu', category: 'jastip', price: 5000, emoji: '🧈' },
+      { id: 12, name: 'Singkong', category: 'jastip', price: 5000, emoji: '🍠' },
+      { id: 13, name: 'Tempe', category: 'jastip', price: 5000, emoji: '🥪' },
+      { id: 14, name: 'Roti Kering', category: 'jastip', price: 5000, emoji: '🍞' },
+      { id: 15, name: 'Kerupuk Seblak', category: 'jastip', price: 5000, emoji: '🥣' },
     ];
 
     const QUICK_CASH_PRESETS = [
@@ -1699,6 +1725,25 @@
 
     const LS_KEY = 'bazar_transactions';
     const LS_LEGACY_KEY = 'bazaar_pos_history';
+    const LS_KEY_PRICES = 'bazar_menu_prices';
+
+    function getMenuItems() {
+      try {
+        const raw = localStorage.getItem(LS_KEY_PRICES);
+        if (raw) {
+          const customPrices = JSON.parse(raw);
+          return DEFAULT_MENU_ITEMS.map(item => ({
+            ...item,
+            price: typeof customPrices[item.name] === 'number' ? customPrices[item.name] : item.price
+          }));
+        }
+      } catch (e) {
+        console.error('Error load menu prices:', e);
+      }
+      return DEFAULT_MENU_ITEMS.map(item => ({ ...item }));
+    }
+
+    let MENU_ITEMS = getMenuItems();
 
     /* ═══════════════════════════════════════════
        STATE
@@ -1710,6 +1755,7 @@
        DOM REFS
        ═══════════════════════════════════════════ */
     const $menuGrid = document.getElementById('menu-grid');
+    const $jastipGrid = document.getElementById('jastip-grid');
     const $orderList = document.getElementById('order-list');
     const $orderEmpty = document.getElementById('order-empty');
     const $totalAmount = document.getElementById('total-amount');
@@ -1785,24 +1831,39 @@
     /* ═══════════════════════════════════════════
        RENDER: MENU GRID (Horizontal)
        ═══════════════════════════════════════════ */
+    function createMenuCard(item, isJastip = false) {
+      const card = document.createElement('div');
+      card.className = `menu-card ${isJastip ? 'jastip-card' : ''}`;
+      card.id = 'menu-item-' + item.id;
+
+      const inOrder = currentOrder.find(o => o.menuItem.id === item.id);
+
+      card.innerHTML = `
+        <span class="emoji">${item.emoji}</span>
+        <div class="item-name">${escapeHtml(item.name)}</div>
+        <div class="item-price">${formatRp(item.price)}</div>
+        ${inOrder ? `<span class="badge">${inOrder.qty}</span>` : ''}
+      `;
+      card.addEventListener('click', () => addToOrder(item));
+      return card;
+    }
+
     function renderMenuGrid() {
       $menuGrid.innerHTML = '';
-      MENU_ITEMS.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'menu-card';
-        card.id = 'menu-item-' + item.id;
+      if ($jastipGrid) $jastipGrid.innerHTML = '';
 
-        const inOrder = currentOrder.find(o => o.menuItem.id === item.id);
+      const mainItems = MENU_ITEMS.filter(item => item.category !== 'jastip');
+      const jastipItems = MENU_ITEMS.filter(item => item.category === 'jastip');
 
-        card.innerHTML = `
-          <span class="emoji">${item.emoji}</span>
-          <div class="item-name">${item.name}</div>
-          <div class="item-price">${formatRp(item.price)}</div>
-          ${inOrder ? `<span class="badge">${inOrder.qty}</span>` : ''}
-        `;
-        card.addEventListener('click', () => addToOrder(item));
-        $menuGrid.appendChild(card);
+      mainItems.forEach(item => {
+        $menuGrid.appendChild(createMenuCard(item, false));
       });
+
+      if ($jastipGrid) {
+        jastipItems.forEach(item => {
+          $jastipGrid.appendChild(createMenuCard(item, true));
+        });
+      }
     }
 
     /* ═══════════════════════════════════════════
@@ -1981,6 +2042,7 @@
     }
 
     function escapeHtml(str) {
+      if (!str) return '';
       const d = document.createElement('div');
       d.textContent = str;
       return d.innerHTML;
