@@ -409,28 +409,45 @@
     .item-info { display: flex; flex-direction: column; }
     .item-name { font-weight: 700; color: var(--text); }
     .item-cat {
-      font-size: 0.7rem;
-      font-weight: 700;
+      font-size: 0.68rem;
+      font-weight: 800;
       text-transform: uppercase;
-      color: var(--cool-3);
+      letter-spacing: 0.3px;
+      display: inline-block;
+      width: fit-content;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-top: 2px;
     }
+    .item-cat.cat-makanan { color: #0e3d4d; background: #e4f2f7; border: 1px solid var(--cool-4); }
+    .item-cat.cat-minuman { color: #0369a1; background: #e0f2fe; border: 1px solid #bae6fd; }
+    .item-cat.cat-jastip  { color: #92400e; background: #fef3c7; border: 1px solid #fde68a; }
 
-    .input-hpp-wrap {
+    .input-hpp-wrap,
+    .input-price-wrap {
       display: inline-flex;
       align-items: center;
       background: var(--clay-bg-alt);
       box-shadow: var(--shadow-clay-inset);
       border: 1px solid rgba(14, 61, 77, 0.15);
       padding: 4px 8px;
-      width: 130px;
+      width: 125px;
+      transition: all var(--transition);
     }
-    .input-hpp-wrap .prefix {
+    .input-hpp-wrap:focus-within,
+    .input-price-wrap:focus-within {
+      border-color: var(--cool-2);
+      box-shadow: inset 1px 1px 3px rgba(14, 61, 77, 0.2), 0 0 0 2px rgba(67, 133, 157, 0.2);
+    }
+    .input-hpp-wrap .prefix,
+    .input-price-wrap .prefix {
       font-size: 0.8rem;
       font-weight: 700;
       color: var(--text-muted);
       margin-right: 4px;
     }
-    .input-hpp {
+    .input-hpp,
+    .input-price {
       width: 100%;
       border: none;
       background: transparent;
@@ -591,11 +608,304 @@
     }
 
     /* ═══════════════════════════════════════════
+       CUSTOMER PERFORMANCE STYLES
+       ═══════════════════════════════════════════ */
+    .cust-stat-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .cust-stat-pill {
+      background: var(--clay-bg-alt);
+      box-shadow: var(--shadow-clay-inset);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      padding: 6px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 120px;
+    }
+    .cust-stat-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+    }
+    .cust-stat-val {
+      font-size: 0.94rem;
+      font-weight: 800;
+      color: var(--cool-1);
+    }
+    .cust-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .cust-search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex: 1;
+      min-width: 240px;
+      max-width: 420px;
+      background: #ffffff;
+      box-shadow: var(--shadow-clay-inset);
+      border: 1px solid rgba(14, 61, 77, 0.12);
+      padding: 2px 8px;
+    }
+    .cust-search-wrap .search-icon {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-right: 6px;
+      user-select: none;
+    }
+    .cust-search-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: 6px 4px;
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text);
+      outline: none;
+    }
+    .cust-clear-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      padding: 4px;
+      line-height: 1;
+    }
+    .cust-clear-btn:hover {
+      color: var(--danger);
+    }
+    .cust-sort-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cust-sort-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .cust-sort-select {
+      background: #ffffff;
+      box-shadow: var(--shadow-clay);
+      border: 1.5px solid rgba(14, 61, 77, 0.12);
+      padding: 6px 12px;
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .cust-sort-select:hover, .cust-sort-select:focus {
+      border-color: var(--cool-3);
+      box-shadow: var(--shadow-clay-hover);
+    }
+    .cust-avatar-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cust-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cool-3), var(--cool-1));
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.82rem;
+      box-shadow: 1px 1px 4px rgba(14, 61, 77, 0.15);
+      flex-shrink: 0;
+    }
+    .cust-avatar.gold {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+    .cust-avatar.silver {
+      background: linear-gradient(135deg, #94a3b8, #64748b);
+    }
+    .cust-avatar.bronze {
+      background: linear-gradient(135deg, #d97706, #92400e);
+    }
+    .cust-info-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .cust-name {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+    .cust-last-time {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .rank-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      min-width: 28px;
+      padding: 2px 6px;
+    }
+    .rank-badge.rank-1 {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+    }
+    .rank-badge.rank-2 {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+    .rank-badge.rank-3 {
+      background: #ffedd5;
+      color: #9a3412;
+      border: 1px solid #fdba74;
+    }
+    .rank-badge.rank-normal {
+      color: var(--text-muted);
+    }
+
+    .cust-freq-cell {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+    }
+    .cust-freq-val {
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+    .cust-freq-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .cust-qty-cell {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      min-width: 95px;
+    }
+    .cust-qty-badge {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      background: linear-gradient(135deg, #e4f2f7, #cbe5ef);
+      border: 1px solid var(--cool-4);
+      padding: 3px 10px;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-clay);
+    }
+    .cust-qty-badge .qty-num {
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--cool-1);
+    }
+    .cust-qty-badge .qty-unit {
+      font-weight: 700;
+      font-size: 0.7rem;
+      color: var(--cool-2);
+      text-transform: uppercase;
+    }
+    .cust-qty-bar-bg {
+      width: 75px;
+      height: 5px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .cust-qty-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cool-4), var(--cool-2));
+      border-radius: 3px;
+    }
+
+    .cust-spend-val {
+      font-weight: 800;
+      font-size: 0.94rem;
+      color: var(--cool-1);
+    }
+
+    .cust-items-breakdown {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .cust-item-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #ffffff;
+      border: 1px solid rgba(14, 61, 77, 0.12);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      box-shadow: 1px 1px 3px rgba(14, 61, 77, 0.05);
+      transition: all var(--transition);
+    }
+    .cust-item-chip:hover {
+      transform: translateY(-1px);
+      box-shadow: 2px 2px 6px rgba(14, 61, 77, 0.12);
+      border-color: var(--cool-3);
+    }
+    .chip-emoji {
+      font-size: 0.95rem;
+      line-height: 1;
+    }
+    .chip-name {
+      font-weight: 700;
+      color: var(--text);
+    }
+    .chip-qty {
+      font-weight: 800;
+      color: var(--cool-1);
+      background: #e4f2f7;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.76rem;
+    }
+    .chip-subtotal {
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+    }
+
+    /* ═══════════════════════════════════════════
        RESPONSIVE
        ═══════════════════════════════════════════ */
     @media (max-width: 1024px) {
       .kpi-grid { grid-template-columns: repeat(2, 1fr); }
       .kpi-secondary-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .cust-toolbar { flex-direction: column; align-items: stretch; }
+      .cust-search-wrap { max-width: 100%; }
+      .cust-stat-pills { width: 100%; justify-content: space-between; }
+      .cust-stat-pill { flex: 1; min-width: 90px; }
     }
     @media (max-width: 640px) {
       .header-container { justify-content: center; text-align: center; }
@@ -699,19 +1009,19 @@
       </div>
     </section>
 
-    <!-- ═══ BLOCK 1: Input / Setting HPP Menu ═══ -->
+    <!-- ═══ BLOCK 1: Input / Setting Menu & HPP ═══ -->
     <section class="block" id="block-hpp-config">
       <div class="block-header-wrap">
         <div>
           <div class="block-title">
             <span class="icon" style="background: #f59e0b; color: #ffffff;">⚙️</span>
-            Input &amp; Konfigurasi HPP Menu
+            Input &amp; Konfigurasi Menu (Harga Jual &amp; HPP)
           </div>
-          <div class="block-desc">Tentukan modal (HPP) per porsi tiap menu. Tersimpan otomatis di browser.</div>
+          <div class="block-desc">Atur harga jual di kasir POS dan modal (HPP) per porsi tiap menu. Tersimpan otomatis di sistem kasir &amp; browser.</div>
         </div>
         <div style="display: flex; gap: 8px;">
-          <button class="btn-clay btn-secondary" id="btn-reset-hpp" type="button">🔄 Reset</button>
-          <button class="btn-clay btn-primary" id="btn-save-hpp" type="button">💾 Simpan HPP</button>
+          <button class="btn-clay btn-secondary" id="btn-reset-hpp" type="button">🔄 Reset Default</button>
+          <button class="btn-clay btn-primary" id="btn-save-hpp" type="button">💾 Simpan Perubahan</button>
         </div>
       </div>
 
@@ -770,6 +1080,77 @@
       </div>
     </section>
 
+    <!-- ═══ BLOCK 4: Tabel Performa & Rincian Pelanggan ═══ -->
+    <section class="block" id="block-customer-performance">
+      <div class="block-header-wrap">
+        <div>
+          <div class="block-title">
+            <span class="icon" style="background: #2563eb; color: #ffffff;">👥</span>
+            Tabel Performa Pelanggan
+          </div>
+          <div class="block-desc">Total semua menu yang dibeli dan rincian item pesanan per pelanggan.</div>
+        </div>
+
+        <div class="cust-stat-pills">
+          <div class="cust-stat-pill">
+            <span class="cust-stat-label">Total Pelanggan</span>
+            <span class="cust-stat-val" id="stat-cust-total">0 Orang</span>
+          </div>
+          <div class="cust-stat-pill">
+            <span class="cust-stat-label">Total Porsi Dibeli</span>
+            <span class="cust-stat-val" id="stat-cust-total-qty">0 Porsi</span>
+          </div>
+          <div class="cust-stat-pill">
+            <span class="cust-stat-label">Rata-rata Menu</span>
+            <span class="cust-stat-val" id="stat-cust-avg-qty">0 Porsi</span>
+          </div>
+          <div class="cust-stat-pill">
+            <span class="cust-stat-label">Top Pelanggan</span>
+            <span class="cust-stat-val" id="stat-cust-top">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls: Search & Sort Toolbar -->
+      <div class="cust-toolbar">
+        <div class="cust-search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="input-cust-search" class="cust-search-input" placeholder="Cari nama pelanggan..." autocomplete="off">
+          <button type="button" id="btn-cust-clear-search" class="cust-clear-btn" style="display: none;" title="Hapus pencarian">✕</button>
+        </div>
+        <div class="cust-sort-wrap">
+          <label for="select-cust-sort" class="cust-sort-label">Urutkan:</label>
+          <select id="select-cust-sort" class="cust-sort-select">
+            <option value="qty-desc">Paling Banyak Beli (Porsi Terbanyak)</option>
+            <option value="spend-desc">Total Belanja Tertinggi</option>
+            <option value="tx-desc">Frekuensi Transaksi Terbanyak</option>
+            <option value="name-asc">Nama Pelanggan (A - Z)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="clay-table">
+          <thead>
+            <tr>
+              <th style="width: 48px;" class="text-center">No</th>
+              <th style="min-width: 180px;">Nama Pelanggan</th>
+              <th class="text-center" style="width: 110px;">Frekuensi</th>
+              <th class="text-center" style="width: 150px;">Total Porsi Dibeli</th>
+              <th class="text-right" style="width: 140px;">Total Belanja</th>
+              <th style="min-width: 260px;">Rincian Menu Yang Dibeli</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-customer-perf">
+            <!-- Rendered by JS -->
+          </tbody>
+          <tfoot id="tfoot-customer-perf">
+            <!-- Rendered by JS -->
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
     <!-- ═══ SECTION: Riwayat Transaksi Terkini ═══ -->
     <section class="block" id="block-recent-tx">
       <div class="block-header-wrap">
@@ -805,14 +1186,27 @@
     const LS_KEY_TX = 'bazar_transactions';
     const LS_LEGACY_KEY = 'bazaar_pos_history';
     const LS_KEY_HPP = 'bazar_hpp_config';
+    const LS_KEY_PRICES = 'bazar_menu_prices';
 
     const DEFAULT_MENUS = [
+      // Menu Utama (Makanan)
       { id: 1, name: 'Risol',          category: 'makanan', price: 3500, defaultHpp: 2000, emoji: '🥟' },
       { id: 2, name: 'Piscok',         category: 'makanan', price: 1500, defaultHpp: 800,  emoji: '🍫' },
       { id: 3, name: 'Cheese Roll',    category: 'makanan', price: 2000, defaultHpp: 1000, emoji: '🧀' },
+      // Menu Utama (Minuman)
       { id: 4, name: 'Es Teh',         category: 'minuman', price: 3000, defaultHpp: 1200, emoji: '🥤' },
       { id: 5, name: 'Nutrisari',      category: 'minuman', price: 5000, defaultHpp: 2500, emoji: '🍊' },
       { id: 6, name: 'Goodday Freeze', category: 'minuman', price: 5000, defaultHpp: 2500, emoji: '☕' },
+      // Kategori Baru: Jasa Titip
+      { id: 7, name: 'Cilok Bumbu Kacang', category: 'jastip', price: 5000, defaultHpp: 3500, emoji: '🍡' },
+      { id: 8, name: 'Pisang Nugget',      category: 'jastip', price: 5000, defaultHpp: 3500, emoji: '🍌' },
+      { id: 9, name: 'Makaroni',           category: 'jastip', price: 5000, defaultHpp: 3500, emoji: '🍝' },
+      { id: 10, name: 'Basreng',           category: 'jastip', price: 5000, defaultHpp: 3500, emoji: '🍘' },
+      { id: 11, name: 'Tahu',              category: 'jastip', price: 5000, defaultHpp: 3500, emoji: '🧈' },
+      { id: 12, name: 'Singkong',          category: 'jastip', price: 5000, defaultHpp: 3500, emoji: '🍠' },
+      { id: 13, name: 'Tempe',             category: 'jastip', price: 5000, defaultHpp: 3500, emoji: '🥪' },
+      { id: 14, name: 'Roti Kering',       category: 'jastip', price: 5000, defaultHpp: 3500, emoji: '🍞' },
+      { id: 15, name: 'Kerupuk Seblak',    category: 'jastip', price: 5000, defaultHpp: 3500, emoji: '🥣' },
     ];
 
     /* ═══════════════════════════════════════════
@@ -820,28 +1214,40 @@
        ═══════════════════════════════════════════ */
     let transactions = [];
     let hppConfig = {};
+    let menuPrices = {};
+    let customerSearchQuery = '';
+    let customerSortOrder = 'qty-desc';
 
     /* ═══════════════════════════════════════════
        DOM REFS
        ═══════════════════════════════════════════ */
-    const $tbodyHpp       = document.getElementById('tbody-hpp-config');
-    const $tbodyPerf      = document.getElementById('tbody-performance');
-    const $tfootPerf      = document.getElementById('tfoot-performance');
-    const $txPreviewList  = document.getElementById('tx-preview-list');
-    const $toastContainer = document.getElementById('toast-container');
+    const $tbodyHpp         = document.getElementById('tbody-hpp-config');
+    const $tbodyPerf        = document.getElementById('tbody-performance');
+    const $tfootPerf        = document.getElementById('tfoot-performance');
+    const $tbodyCustPerf    = document.getElementById('tbody-customer-perf');
+    const $tfootCustPerf    = document.getElementById('tfoot-customer-perf');
+    const $statCustTotal    = document.getElementById('stat-cust-total');
+    const $statCustTotalQty = document.getElementById('stat-cust-total-qty');
+    const $statCustAvgQty   = document.getElementById('stat-cust-avg-qty');
+    const $statCustTop      = document.getElementById('stat-cust-top');
+    const $inputCustSearch  = document.getElementById('input-cust-search');
+    const $btnCustClear     = document.getElementById('btn-cust-clear-search');
+    const $selectCustSort   = document.getElementById('select-cust-sort');
+    const $txPreviewList    = document.getElementById('tx-preview-list');
+    const $toastContainer   = document.getElementById('toast-container');
 
-    const $kpiOmset       = document.getElementById('kpi-omset');
-    const $kpiHpp         = document.getElementById('kpi-hpp');
-    const $kpiLaba        = document.getElementById('kpi-laba');
-    const $kpiMargin      = document.getElementById('kpi-margin');
-    const $kpiTxCount     = document.getElementById('kpi-tx-count');
-    const $kpiQtyCount    = document.getElementById('kpi-qty-count');
-    const $kpiMethod      = document.getElementById('kpi-method-breakdown');
-    const $kpiAvgTx       = document.getElementById('kpi-avg-tx');
+    const $kpiOmset         = document.getElementById('kpi-omset');
+    const $kpiHpp           = document.getElementById('kpi-hpp');
+    const $kpiLaba          = document.getElementById('kpi-laba');
+    const $kpiMargin        = document.getElementById('kpi-margin');
+    const $kpiTxCount       = document.getElementById('kpi-tx-count');
+    const $kpiQtyCount      = document.getElementById('kpi-qty-count');
+    const $kpiMethod        = document.getElementById('kpi-method-breakdown');
+    const $kpiAvgTx         = document.getElementById('kpi-avg-tx');
 
-    const $btnSaveHpp     = document.getElementById('btn-save-hpp');
-    const $btnResetHpp    = document.getElementById('btn-reset-hpp');
-    const $btnRefresh     = document.getElementById('btn-refresh');
+    const $btnSaveHpp       = document.getElementById('btn-save-hpp');
+    const $btnResetHpp      = document.getElementById('btn-reset-hpp');
+    const $btnRefresh       = document.getElementById('btn-refresh');
 
     /* ═══════════════════════════════════════════
        HELPERS
@@ -889,6 +1295,38 @@
       }
     }
 
+    function loadMenuPrices() {
+      try {
+        const raw = localStorage.getItem(LS_KEY_PRICES);
+        if (raw) {
+          menuPrices = JSON.parse(raw);
+        } else {
+          menuPrices = {};
+          DEFAULT_MENUS.forEach(m => {
+            menuPrices[m.name] = m.price;
+          });
+          saveMenuPrices(false);
+        }
+      } catch (e) {
+        console.error('Error load prices:', e);
+        menuPrices = {};
+        DEFAULT_MENUS.forEach(m => {
+          menuPrices[m.name] = m.price;
+        });
+      }
+    }
+
+    function saveMenuPrices(showToast = false) {
+      try {
+        localStorage.setItem(LS_KEY_PRICES, JSON.stringify(menuPrices));
+        if (showToast) {
+          toast('Pengaturan harga jual berhasil disimpan! 🏷️', 'success');
+        }
+      } catch (e) {
+        console.error('Error save prices:', e);
+      }
+    }
+
     function loadHppConfig() {
       try {
         const raw = localStorage.getItem(LS_KEY_HPP);
@@ -910,7 +1348,7 @@
       }
     }
 
-    function saveHppConfig(showToast = true) {
+    function saveHppConfig(showToast = false) {
       try {
         localStorage.setItem(LS_KEY_HPP, JSON.stringify(hppConfig));
         if (showToast) {
@@ -934,11 +1372,12 @@
       const itemStats = {};
 
       DEFAULT_MENUS.forEach(m => {
+        const currentPrice = typeof menuPrices[m.name] === 'number' ? menuPrices[m.name] : m.price;
         const hpp = typeof hppConfig[m.name] === 'number' ? hppConfig[m.name] : m.defaultHpp;
         itemStats[m.name] = {
           name: m.name,
           category: m.category,
-          price: m.price,
+          price: currentPrice,
           hpp: hpp,
           emoji: m.emoji,
           qtySold: 0,
@@ -960,11 +1399,12 @@
             const price = Number(item.price) || 0;
 
             if (!itemStats[name]) {
+              const currentPrice = typeof menuPrices[name] === 'number' ? menuPrices[name] : price;
               const hpp = typeof hppConfig[name] === 'number' ? hppConfig[name] : 0;
               itemStats[name] = {
                 name: name,
                 category: item.category || 'menu',
-                price: price,
+                price: currentPrice,
                 hpp: hpp,
                 emoji: item.emoji || '🍽️',
                 qtySold: 0,
@@ -1015,6 +1455,82 @@
     }
 
     /* ═══════════════════════════════════════════
+       COMPUTE CUSTOMER PERFORMANCE
+       ═══════════════════════════════════════════ */
+    function computeCustomerMetrics() {
+      const custMap = {};
+
+      transactions.forEach(tx => {
+        const rawName = (tx.customer || '').trim();
+        const custName = rawName || 'Tamu';
+        const key = custName.toLowerCase();
+
+        if (!custMap[key]) {
+          custMap[key] = {
+            name: custName,
+            txCount: 0,
+            totalQty: 0,
+            totalSpend: 0,
+            lastSeen: tx.time || '',
+            items: {} // itemName -> { name, qty, price, emoji, category, subtotal }
+          };
+        }
+
+        custMap[key].txCount += 1;
+        custMap[key].totalSpend += (Number(tx.total) || 0);
+        if (tx.time) {
+          custMap[key].lastSeen = tx.time;
+        }
+
+        if (Array.isArray(tx.items)) {
+          tx.items.forEach(item => {
+            const itemName = item.name;
+            const itemQty = Number(item.qty) || 0;
+            const itemPrice = Number(item.price) || 0;
+            const itemSubtotal = item.subtotal || (itemPrice * itemQty);
+
+            if (!custMap[key].items[itemName]) {
+              custMap[key].items[itemName] = {
+                name: itemName,
+                qty: 0,
+                price: itemPrice,
+                emoji: item.emoji || '🍽️',
+                category: item.category || 'menu',
+                subtotal: 0
+              };
+            }
+
+            custMap[key].items[itemName].qty += itemQty;
+            custMap[key].items[itemName].subtotal += itemSubtotal;
+            custMap[key].totalQty += itemQty;
+          });
+        }
+      });
+
+      const customerList = Object.values(custMap);
+      const totalUniqueCust = customerList.length;
+      let totalAllCustQty = 0;
+      let topCustomer = null;
+
+      customerList.forEach(c => {
+        totalAllCustQty += c.totalQty;
+        if (!topCustomer || c.totalQty > topCustomer.totalQty || (c.totalQty === topCustomer.totalQty && c.totalSpend > topCustomer.totalSpend)) {
+          topCustomer = c;
+        }
+      });
+
+      const avgQtyPerCust = totalUniqueCust > 0 ? (totalAllCustQty / totalUniqueCust).toFixed(1) : '0';
+
+      return {
+        customerList,
+        totalUniqueCust,
+        totalAllCustQty,
+        avgQtyPerCust,
+        topCustomer: topCustomer ? topCustomer.name : '-'
+      };
+    }
+
+    /* ═══════════════════════════════════════════
        RENDER FUNCTIONS
        ═══════════════════════════════════════════ */
     function renderKpis(metrics) {
@@ -1029,13 +1545,31 @@
       $kpiAvgTx.textContent = formatRp(metrics.avgTx);
     }
 
+    function formatCategory(cat) {
+      if (!cat) return 'Menu';
+      const c = cat.toLowerCase();
+      if (c === 'jastip' || c === 'jasa titip') return 'Jasa Titip';
+      if (c === 'makanan') return 'Makanan';
+      if (c === 'minuman') return 'Minuman';
+      return cat;
+    }
+
+    function getCategoryClass(cat) {
+      if (!cat) return 'cat-makanan';
+      const c = cat.toLowerCase();
+      if (c === 'jastip' || c === 'jasa titip') return 'cat-jastip';
+      if (c === 'minuman') return 'cat-minuman';
+      return 'cat-makanan';
+    }
+
     function renderHppConfigTable() {
       $tbodyHpp.innerHTML = '';
 
       DEFAULT_MENUS.forEach(menu => {
+        const currentPrice = typeof menuPrices[menu.name] === 'number' ? menuPrices[menu.name] : menu.price;
         const currentHpp = typeof hppConfig[menu.name] === 'number' ? hppConfig[menu.name] : menu.defaultHpp;
-        const profit = menu.price - currentHpp;
-        const marginPct = menu.price > 0 ? ((profit / menu.price) * 100).toFixed(1) : '0';
+        const profit = currentPrice - currentHpp;
+        const marginPct = currentPrice > 0 ? ((profit / currentPrice) * 100).toFixed(1) : '0';
         const isNegative = profit < 0;
 
         const tr = document.createElement('tr');
@@ -1044,14 +1578,19 @@
             <div class="item-cell">
               <span class="item-emoji">${menu.emoji}</span>
               <div class="item-info">
-                <span class="item-name">${menu.name}</span>
-                <span class="item-cat">${menu.category}</span>
+                <span class="item-name">${escapeHtml(menu.name)}</span>
+                <span class="item-cat ${getCategoryClass(menu.category)}">${formatCategory(menu.category)}</span>
               </div>
             </div>
           </td>
-          <td class="text-right"><strong>${formatRp(menu.price)}</strong></td>
           <td class="text-right">
-            <div class="input-hpp-wrap">
+            <div class="input-price-wrap" title="Ubah harga jual menu">
+              <span class="prefix">Rp</span>
+              <input type="text" class="input-price" data-menu="${menu.name}" value="${formatNumber(currentPrice)}" inputmode="numeric">
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="input-hpp-wrap" title="Ubah HPP modal menu">
               <span class="prefix">Rp</span>
               <input type="text" class="input-hpp" data-menu="${menu.name}" value="${formatNumber(currentHpp)}" inputmode="numeric">
             </div>
@@ -1068,14 +1607,29 @@
           </td>
         `;
 
-        const input = tr.querySelector('.input-hpp');
-        input.addEventListener('input', (e) => {
+        // Input Harga Jual
+        const inputPrice = tr.querySelector('.input-price');
+        inputPrice.addEventListener('input', (e) => {
+          const raw = e.target.value.replace(/\D/g, '');
+          const val = raw === '' ? 0 : Number(raw);
+          e.target.value = val === 0 && raw === '' ? '' : formatNumber(val);
+
+          menuPrices[menu.name] = val;
+          saveMenuPrices(false);
+          updateHppPreviewRow(menu, val, typeof hppConfig[menu.name] === 'number' ? hppConfig[menu.name] : menu.defaultHpp, tr);
+          renderAll(false);
+        });
+
+        // Input HPP Modal
+        const inputHpp = tr.querySelector('.input-hpp');
+        inputHpp.addEventListener('input', (e) => {
           const raw = e.target.value.replace(/\D/g, '');
           const val = raw === '' ? 0 : Number(raw);
           e.target.value = val === 0 && raw === '' ? '' : formatNumber(val);
 
           hppConfig[menu.name] = val;
-          updateHppPreviewRow(menu, val, tr);
+          saveHppConfig(false);
+          updateHppPreviewRow(menu, typeof menuPrices[menu.name] === 'number' ? menuPrices[menu.name] : menu.price, val, tr);
           renderAll(false);
         });
 
@@ -1083,9 +1637,9 @@
       });
     }
 
-    function updateHppPreviewRow(menu, hppVal, tr) {
-      const profit = menu.price - hppVal;
-      const marginPct = menu.price > 0 ? ((profit / menu.price) * 100).toFixed(1) : '0';
+    function updateHppPreviewRow(menu, priceVal, hppVal, tr) {
+      const profit = priceVal - hppVal;
+      const marginPct = priceVal > 0 ? ((profit / priceVal) * 100).toFixed(1) : '0';
       const isNegative = profit < 0;
 
       const badge = tr.querySelector(`#profit-badge-${menu.id}`);
@@ -1133,8 +1687,8 @@
             <div class="item-cell">
               <span class="item-emoji">${item.emoji}</span>
               <div class="item-info">
-                <span class="item-name">${item.name}</span>
-                <span class="item-cat">${item.category}</span>
+                <span class="item-name">${escapeHtml(item.name)}</span>
+                <span class="item-cat ${getCategoryClass(item.category)}">${formatCategory(item.category)}</span>
               </div>
             </div>
           </td>
@@ -1176,6 +1730,136 @@
       $tfootPerf.appendChild(trTotal);
     }
 
+    function renderCustomerPerformance() {
+      const { customerList, totalUniqueCust, totalAllCustQty, avgQtyPerCust, topCustomer } = computeCustomerMetrics();
+
+      $statCustTotal.textContent = `${formatNumber(totalUniqueCust)} Orang`;
+      if ($statCustTotalQty) {
+        $statCustTotalQty.textContent = `${formatNumber(totalAllCustQty)} Porsi`;
+      }
+      $statCustAvgQty.textContent = `${avgQtyPerCust} Porsi`;
+      $statCustTop.textContent = topCustomer;
+
+      // Filter query
+      let filtered = customerList.filter(c => {
+        if (!customerSearchQuery) return true;
+        return c.name.toLowerCase().includes(customerSearchQuery.toLowerCase());
+      });
+
+      // Sort
+      filtered.sort((a, b) => {
+        if (customerSortOrder === 'qty-desc') {
+          return b.totalQty - a.totalQty || b.totalSpend - a.totalSpend;
+        } else if (customerSortOrder === 'spend-desc') {
+          return b.totalSpend - a.totalSpend || b.totalQty - a.totalQty;
+        } else if (customerSortOrder === 'tx-desc') {
+          return b.txCount - a.txCount || b.totalQty - a.totalQty;
+        } else if (customerSortOrder === 'name-asc') {
+          return a.name.localeCompare(b.name, 'id');
+        }
+        return 0;
+      });
+
+      $tbodyCustPerf.innerHTML = '';
+      $tfootCustPerf.innerHTML = '';
+
+      if (filtered.length === 0) {
+        const msg = customerSearchQuery ? `Tidak ada pelanggan dengan nama "${escapeHtml(customerSearchQuery)}".` : 'Belum ada data pelanggan.';
+        $tbodyCustPerf.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 24px; color: var(--text-muted);">${msg}</td></tr>`;
+        return;
+      }
+
+      const maxQty = Math.max(...customerList.map(c => c.totalQty), 1);
+      let sumFilteredQty = 0;
+      let sumFilteredSpend = 0;
+      let sumFilteredTx = 0;
+
+      filtered.forEach((cust, index) => {
+        sumFilteredQty += cust.totalQty;
+        sumFilteredSpend += cust.totalSpend;
+        sumFilteredTx += cust.txCount;
+
+        const rank = index + 1;
+        let rankBadgeClass = 'rank-normal';
+        let rankText = `#${rank}`;
+        let avatarClass = '';
+
+        if (customerSortOrder === 'qty-desc' || customerSortOrder === 'spend-desc') {
+          if (rank === 1) { rankBadgeClass = 'rank-1'; rankText = '🥇 #1'; avatarClass = 'gold'; }
+          else if (rank === 2) { rankBadgeClass = 'rank-2'; rankText = '🥈 #2'; avatarClass = 'silver'; }
+          else if (rank === 3) { rankBadgeClass = 'rank-3'; rankText = '🥉 #3'; avatarClass = 'bronze'; }
+        }
+
+        const initial = cust.name.charAt(0).toUpperCase() || '👤';
+        const pct = cust.totalQty > 0 ? Math.round((cust.totalQty / maxQty) * 100) : 0;
+
+        // Breakdown items pills
+        const itemPills = Object.values(cust.items)
+          .sort((a, b) => b.qty - a.qty)
+          .map(item => `
+            <span class="cust-item-chip" title="${item.name}: ${item.qty} porsi (${formatRp(item.subtotal)})">
+              <span class="chip-emoji">${item.emoji}</span>
+              <span class="chip-name">${escapeHtml(item.name)}</span>
+              <span class="chip-qty">×${item.qty}</span>
+              <span class="chip-subtotal">${formatRp(item.subtotal)}</span>
+            </span>
+          `).join('');
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="text-center">
+            <span class="rank-badge ${rankBadgeClass}">${rankText}</span>
+          </td>
+          <td>
+            <div class="cust-avatar-cell">
+              <div class="cust-avatar ${avatarClass}">${initial}</div>
+              <div class="cust-info-wrap">
+                <span class="cust-name">${escapeHtml(cust.name)}</span>
+                <span class="cust-last-time">Terakhir: ${cust.lastSeen || '-'}</span>
+              </div>
+            </div>
+          </td>
+          <td class="text-center">
+            <div class="cust-freq-cell">
+              <span class="cust-freq-val">${cust.txCount}x</span>
+              <span class="cust-freq-label">Transaksi</span>
+            </div>
+          </td>
+          <td class="text-center">
+            <div class="cust-qty-cell">
+              <span class="cust-qty-badge">
+                <span class="qty-num">${formatNumber(cust.totalQty)}</span>
+                <span class="qty-unit">Porsi</span>
+              </span>
+              <div class="cust-qty-bar-bg" title="${cust.totalQty} porsi">
+                <div class="cust-qty-bar-fill" style="width: ${pct}%;"></div>
+              </div>
+            </div>
+          </td>
+          <td class="text-right">
+            <span class="cust-spend-val">${formatRp(cust.totalSpend)}</span>
+          </td>
+          <td>
+            <div class="cust-items-breakdown">
+              ${itemPills || '<span style="color: var(--text-muted); font-size: 0.8rem;">-</span>'}
+            </div>
+          </td>
+        `;
+        $tbodyCustPerf.appendChild(tr);
+      });
+
+      const trTotal = document.createElement('tr');
+      trTotal.className = 'total-row';
+      trTotal.innerHTML = `
+        <td colspan="2" class="text-right" style="text-transform: uppercase;">TOTAL (${filtered.length} PELANGGAN)</td>
+        <td class="text-center"><strong>${formatNumber(sumFilteredTx)}x Transaksi</strong></td>
+        <td class="text-center"><strong>${formatNumber(sumFilteredQty)} Porsi</strong></td>
+        <td class="text-right" style="color: var(--cool-1);"><strong>${formatRp(sumFilteredSpend)}</strong></td>
+        <td style="font-size: 0.8rem; color: var(--text-light); font-weight: 700;">Akumulasi seluruh menu yang dipesan pelanggan</td>
+      `;
+      $tfootCustPerf.appendChild(trTotal);
+    }
+
     function renderRecentTx() {
       if (!transactions || transactions.length === 0) {
         $txPreviewList.innerHTML = `
@@ -1210,31 +1894,65 @@
         renderHppConfigTable();
       }
       renderPerformanceTable(metrics);
+      renderCustomerPerformance();
       renderRecentTx();
     }
 
     /* ═══════════════════════════════════════════
        EVENT LISTENERS & INIT
        ═══════════════════════════════════════════ */
-    $btnSaveHpp.addEventListener('click', () => saveHppConfig(true));
-    $btnResetHpp.addEventListener('click', () => {
-      hppConfig = {};
-      DEFAULT_MENUS.forEach(m => { hppConfig[m.name] = m.defaultHpp; });
+    $btnSaveHpp.addEventListener('click', () => {
+      saveMenuPrices(false);
       saveHppConfig(false);
       renderAll(true);
-      toast('HPP direset ke nilai default.', 'info');
+      toast('Konfigurasi Harga Jual & HPP berhasil disimpan! 💾', 'success');
+    });
+
+    $btnResetHpp.addEventListener('click', () => {
+      menuPrices = {};
+      hppConfig = {};
+      DEFAULT_MENUS.forEach(m => {
+        menuPrices[m.name] = m.price;
+        hppConfig[m.name] = m.defaultHpp;
+      });
+      saveMenuPrices(false);
+      saveHppConfig(false);
+      renderAll(true);
+      toast('Konfigurasi menu dikembalikan ke default.', 'info');
     });
 
     $btnRefresh.addEventListener('click', () => {
       loadTransactions();
+      loadMenuPrices();
       loadHppConfig();
       renderAll(true);
       toast('Data berhasil diperbarui! 🔄', 'info');
     });
 
+    $inputCustSearch.addEventListener('input', (e) => {
+      customerSearchQuery = e.target.value.trim();
+      $btnCustClear.style.display = customerSearchQuery ? 'inline-block' : 'none';
+      renderCustomerPerformance();
+    });
+
+    $btnCustClear.addEventListener('click', () => {
+      $inputCustSearch.value = '';
+      customerSearchQuery = '';
+      $btnCustClear.style.display = 'none';
+      $inputCustSearch.focus();
+      renderCustomerPerformance();
+    });
+
+    $selectCustSort.addEventListener('change', (e) => {
+      customerSortOrder = e.target.value;
+      renderCustomerPerformance();
+    });
+
     loadTransactions();
+    loadMenuPrices();
     loadHppConfig();
     renderAll(true);
   </script>
 </body>
 </html>
+
